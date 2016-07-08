@@ -38,21 +38,66 @@
         }
     };
 
+    function setValue(id, value, onChange) {
+        // example: select elements with id=key and class=value and insert value
+        if ($('#' + id + '.value').attr('type') == 'checkbox') {
+            $('#' + id + '.value').prop('checked', value).change(function() {
+                onChange();
+            });
+        } else {
+            $('#' + id + '.value').val(value).change(function() {
+                onChange();
+            }).keyup(function() {
+                // Check that only numbers entered
+                if ($(this).hasClass('number')) {
+                    var val = $(this).val();
+                    if (val) {
+                        var newVal = '';
+                        for (var i = 0; i < val.length; i++) {
+                            if (val[i] >= '0' && val[i] <= '9') {
+                                newVal += val[i];
+                            }
+                        }
+
+                        if (val != newVal) $(this).val(newVal);
+                    }
+                }
+                $(this).trigger('change');
+            });
+        }
+    }
+
     function load(settings, onChange) {
         if (!settings) return;
+
+        for (var key in settings) {
+            setValue(key, settings[key], onChange);
+        }
 
         onChange(false);
     }
 
     function save(callback) {
-        callback(null);
+        var settings = {};
+        $('.value').each(function () {
+            var $this = $(this);
+            var id = $this.attr('id');
+
+            if ($this.attr('type') == 'checkbox') {
+                settings[id] = $this.prop('checked');
+            } else {
+                settings[id] = $this.val();
+            }
+        });
+
+        callback(settings);
     }
 </script>
 </head>
 <body>
 <div id="adapter-container">
     <table><tr>
-        <td><img src="map.png"></td>
+        <td><img src="vis-map.png"></td>
         <td style="padding-top: 20px;padding-left: 10px"><h3 class="translate">Maps Widgets settings</h3></td>
     </tr></table>
 

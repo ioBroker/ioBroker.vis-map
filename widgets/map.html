@@ -16,7 +16,6 @@
         });
     }
 
-    console.log('AAA');
     vis.binds.map = {
         version: "0.1.0",
         showVersion: function () {
@@ -182,13 +181,11 @@
 
                 for (u = 1; u <= data.mCount; u++) {
                     if (vis.binds.map.isLonLatIsOID(data['markersLon-oid' + u])) {
-                        console.log('a');
                         vis.states.bind(data['markersLon-oid' + u] + '.val', function () {
                             vis.binds.map.osm.update($div);
                         });
                     }
                     if (vis.binds.map.isLonLatIsOID(data['markersLat-oid' + u])) {
-                        console.log('b');
                         vis.states.bind(data['markersLat-oid' + u] + '.val', function () {
                             vis.binds.map.osm.update($div);
                         });
@@ -228,11 +225,8 @@
 
                     var image = markers[m].image ? {
                         url: 		markers[m].image.indexOf('/') === -1 ? '//maps.gstatic.com/mapfiles/markers2/' + markers[m].image : markers[m].image,
-                        //size: 	    new google.maps.Size(width, height),
                         origin:     new google.maps.Point(0, 0),
                         scaledSize: new google.maps.Size(width, height) // scaled size
-                        //origin:     new google.maps.Point(0, 0), // origin
-                        //anchor:     new google.maps.Point(0, 0), // anchor
 
                     } : undefined;
 
@@ -305,6 +299,15 @@
                     }, 100);
                     return;
                 }
+                console.log('AIzaSyAcObBQ5OjIT5o8pOrMvYT8TBsoxBeU');
+
+                /*if (vis.editMode && !data.apiKey) {
+                    var obj = vis.objects['system.adapter.vis-map.0'];
+                    if (obj && obj.native && obj.native.googleApiKey) {
+                        vis.views[view].widgets[data.wid].data.apiKey = obj.native.googleApiKey;
+                        data.apiKey = obj.native.googleApiKey;
+                    }
+                }*/
 
                 if (!data.apiKey) {
                     $div.append(_('No API key'));
@@ -392,14 +395,14 @@
     vis.binds.map.showVersion();
 </script>
 <style>
-    a[href^="http://maps.google.com/maps"]{display:none !important}
-    a[href^="https://maps.google.com/maps"]{display:none !important}
+    a[href^="http://maps.google.com/maps"]{display: none !important}
+    a[href^="https://maps.google.com/maps"]{display: none !important}
 
     .gmnoprint a, .gmnoprint span, .gm-style-cc {
-        display:none;
+        display: none;
     }
     .gmnoprint div {
-        background:none !important;
+        background: none !important;
     }
 </style>
 
@@ -412,7 +415,7 @@
         data-vis-update-style="true"
         data-vis-prev='<img src="widgets/map/img/Prev_tplOsm.png"></img>'
         data-vis-attrs="mCount[1]/number,1,20,1;maxZoom[14]/slider,0,18,1;hideControls/checkbox;"
-        data-vis-attrs0="group.markers/byindex;markersLon-oid(1-mCount)/id;markersLat-oid(1-mCount)/id;markersImage(1-mCount)/image;markersWidth(1-mCount)/slider,1,100,1;markersHeight(1-mCount)/slider,1,100,1;markersOffsetX(1-mCount)/slider,1,100,1;markersOffsetY(1-mCount)/slider,1,100,1;markersOpacity(1-mCount)/slider,0,1,0.05;"
+        data-vis-attrs0="group.markers/byindex;markersLon-oid(1-mCount)/id,gps;markersLat-oid(1-mCount)/id,gps;markersImage(1-mCount)/image;markersWidth(1-mCount)/slider,1,100,1;markersHeight(1-mCount)/slider,1,100,1;markersOffsetX(1-mCount)/slider,1,100,1;markersOffsetY(1-mCount)/slider,1,100,1;markersOpacity(1-mCount)/slider,0,1,0.05;"
         >
     <div class="vis-widget <%== this.data.attr('class') %>" style="overflow: hidden; width: 200px; height: 200px;" id="<%= this.data.attr('wid') %>">
         <div class="vis-widget-body" id="map_<%= this.data.attr('wid') %>" <%= (el) -> vis.binds.map.osm.init(el, this.view, this.data) %> style="position: relative;"></div>
@@ -427,8 +430,8 @@
         data-vis-type="map"
         data-vis-update-style="true"
         data-vis-prev='<img src="widgets/map/img/Prev_tplGoogleMap.png"></img>'
-        data-vis-attrs="mCount[1]/number,1,20,1;maxZoom/slider,0,30,1;mapTypeId/select,ROADMAP,SATELLITE,HYBRID,TERRAIN;hideControls/checkbox;noZoomAndPan/checkbox;apiKey;"
-        data-vis-attrs0="group.markers/byindex;markersLon-oid(1-mCount)/id;markersLat-oid(1-mCount)/id;markersImage(1-mCount)/image;markersWidth(1-mCount)/slider,1,100,1;markersHeight(1-mCount)/slider,1,100,1;markersOffsetX(1-mCount)/slider,1,100,1;markersOffsetY(1-mCount)/slider,1,100,1;markersText(1-mCount);markersLabel(1-mCount);markersOpacity(1-mCount)/slider,0,1,0.05;"
+        data-vis-attrs="mCount[1]/number,1,20,1;maxZoom[14]/slider,0,30,1;mapTypeId/select,ROADMAP,SATELLITE,HYBRID,TERRAIN;hideControls/checkbox;noZoomAndPan/checkbox;apiKey;"
+        data-vis-attrs0="group.markers/byindex;markersLon-oid(1-mCount)/id,gps;markersLat-oid(1-mCount)/id,gps;markersImage(1-mCount)/image;markersWidth(1-mCount)/slider,1,100,1;markersHeight(1-mCount)/slider,1,100,1;markersOffsetX(1-mCount)/slider,1,100,1;markersOffsetY(1-mCount)/slider,1,100,1;markersText(1-mCount);markersLabel(1-mCount);markersOpacity(1-mCount)/slider,0,1,0.05;"
 >
     <div class="vis-widget <%== this.data.attr('class') %>" style="overflow: hidden; width: 200px; height: 200px;background-color: none !important" id="<%= this.data.attr('wid') %>">
         <div class="vis-widget-body" id="map_<%= this.data.attr('wid') %>" <%= (el) -> vis.binds.map.googleMap.init(el, this.view, this.data) %>></div>

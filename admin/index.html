@@ -1,0 +1,68 @@
+<html>
+<head>
+<!-- these 4 files always have to be included -->
+<link rel="stylesheet" type="text/css" href="../../lib/css/themes/jquery-ui/redmond/jquery-ui.min.css"/>
+<link rel="stylesheet" type="text/css" href="../../lib/css/jquery.multiselect-1.13.css"/>
+
+<script type="text/javascript" src="../../lib/js/jquery-1.11.1.min.js"></script>
+<script type="text/javascript" src="../../socket.io/socket.io.js"></script>
+<script type="text/javascript" src="../../lib/js/jquery-ui-1.10.3.full.min.js"></script>
+
+<!-- these two file always have to be included -->
+<link rel="stylesheet" type="text/css" href="../../css/adapter.css"/>
+<script type="text/javascript" src="../../js/translate.js"></script>
+<script type="text/javascript" src="../../js/adapter-settings.js"></script>
+
+<style>
+    .table_header {
+        background-color: blue;
+        color: white;
+    }
+    .ip {
+        width: 150px;
+        text-align: right;
+    }
+</style>
+<!-- you have to define 2 functions in the global scope: -->
+<script type="text/javascript">
+	systemDictionary = {
+        "Maps Widgets settings": {
+            "en": "High quality Widgets settings",
+            "de": "High quality Widgets Einstellungen",
+            "ru": "Настройки High quality Widgets"
+        },
+        "Google Map API key:": {
+            "en": "Google Map API key:",
+            "de": "Google Map API Schlüssel:",
+            "ru": "Google Map API ключ"
+        }
+    };
+
+    function load(settings, onChange) {
+        if (!settings) return;
+
+        onChange(false);
+    }
+
+    function save(callback) {
+        callback(null);
+    }
+</script>
+</head>
+<body>
+<div id="adapter-container">
+    <table><tr>
+        <td><img src="map.png"></td>
+        <td style="padding-top: 20px;padding-left: 10px"><h3 class="translate">Maps Widgets settings</h3></td>
+    </tr></table>
+
+    <table>
+        <tr>
+            <td class="translate">Google Map API key:</td>
+            <td><input id="googleApiKey" class="value" /></td>
+            <td><a href="https://developers.google.com/maps/documentation/javascript/get-api-key" target="_blank" class="translate help">Get the Google API Key</a></td>
+        </tr>
+    </table>
+</div>
+</body>
+</html>

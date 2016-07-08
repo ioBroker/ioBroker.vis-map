@@ -1,0 +1,276 @@
+<!--
+    ioBroker.vis map widgets
+
+    version: "0.1.0"
+
+    Copyright 2016 bluefox<dogafox@gmail.com>
+
+-->
+<script type="text/javascript" src="widgets/map/js/ol.js"></script>
+
+<script type="text/javascript">
+    'use strict';
+    if (vis.editMode) {
+        // Add words for basic widgets
+        $.extend(true, systemDictionary, {
+            "format_date":          {"en": "Dateformat",        "de": "Datumformat",            "ru": "Формат даты"}
+
+        });
+    }
+
+    vis.binds.map = {
+        version: "0.1.0",
+        showVersion: function () {
+            if (vis.binds.map.version) {
+                console.log('Version vis-map: ' + vis.binds.map.version);
+                vis.binds.map.version = null;
+            }
+        },
+        updateWidgets: [],
+        updateIntervalTimer: null,
+
+        osm: {
+            fromProjection: null,
+            toProjection: null,
+            getMarkers: function (markers) {
+                var result = new OpenLayers.Layer.Markers('Markers');
+                var list = [];
+
+                for (var m = 0; m < markers.length; m++) {
+                    var width  = parseFloat(markers[m].width  || 25);
+                    var height = parseFloat(markers[m].height || 25);
+                    var size   = new OpenLayers.Size(width, height);
+                    var url    = markers[m].image || 'widgets/map/img/pin.png';
+                    var opacity = (markers[m].opacity === '' || markers[m].opacity === null || markers[m].opacity === undefined) ? 1 : parseFloat(markers[m].opacity);
+                    var offsetX = (markers[m].offsetX === '' || markers[m].offsetX === null || markers[m].offsetX === undefined) ? -(size.w/2) : (-1) * parseFloat(markers[m].offsetX);
+                    var offsetY = (markers[m].offsetY === '' || markers[m].offsetY === null || markers[m].offsetY === undefined) ? -size.h : (-1) * parseFloat(markers[m].offsetY);
+                    var offset = new OpenLayers.Pixel(offsetX, offsetY);
+                    var offset = new OpenLayers.Pixel(offsetX, offsetY);
+
+                    var icon   = new OpenLayers.Icon(url, size, offset);
+                    var marker = new OpenLayers.Marker(text2position(markers[m].lon.toString() + (markers[m].lat ? ';' + markers[m].lat : '')), icon);
+                    if (opacity == 0) marker.display(opacity != 0);
+                    if (opacity != 1 && opacity != 0) marker.setOpacity(opacity);
+
+                    list.push(marker);
+                    result.addMarker(marker);
+                }
+
+                return {layer: result, list: list};
+            },
+            setCenter: function (map, markers, maxZoom) {
+                var bound = markers.getDataExtent();
+                var zoom = Math.min(map.getZoomForExtent(bound), maxZoom === undefined ? 30 : parseFloat(maxZoom));
+                map.setCenter(bound.getCenterLonLat(), zoom);
+            },
+            text2position: function(text) {
+                var parts = text.split(';');
+                if (parts.length < 2) parts = text.split(',');
+                if (parts.length < 2) return null;
+                var lon = parseFloat(parts[0].replace(',', '.').trim());
+                var lat = parseFloat(parts[1].replace(',', '.').trim());
+                return new OpenLayers.LonLat(lon, lat).transform(fromProjection, toProjection);
+            },
+            showMap: function(divName, markerList, maxZoom) {
+                var map = new OpenLayers.Map(divName);
+                var mapnik = new OpenLayers.Layer.OSM();
+                map.addLayer(mapnik);
+
+                var oObj = getMarkers(markerList);
+                map.addLayer(oObj.layer);
+
+                setCenter(map, oObj.layer, maxZoom);
+
+                return {map: map, markers: oObj.list, layer: oObj.layer};
+            },
+            update: function ($div) {
+                var data = $div.data('options');
+                markers[0].lon += 0.001;
+                obj.markers[0].lonlat = text2position(markers[0].lon.toString() + (markers[0].lat ? ';' + markers[0].lat : ''))
+
+                obj.layer.removeMarker(obj.markers[0]);
+                obj.layer.addMarker(obj.markers[0]);
+                setCenter(obj.map, obj.layer, zoom);
+            },
+            init: function (el, view, data) {
+                var $div = $(el);
+
+                var _data = {};
+                for (var s  in data) {
+                    if (s[0] !== '_' && data.hasOwnProperty(s) && typeof data[s] !== 'object' && typeof data[s] !== 'function') {
+                        _data[s] = data[s];
+                    }
+                }
+                data = null;
+                $div.data('options', _data);
+
+                if (_data.oid && _data.instance) {
+                    if (_data.timeAsInterval && vis.binds.history.updateWidgets.indexOf(_data.wid) === -1) {
+                        vis.binds.history.updateWidgets.push(_data.wid);
+                        vis.binds.history.startIntervalUpdate();
+                    }
+
+                    vis.states.bind(_data.oid + '.val', function () {
+                        vis.binds.history.eventList.update($div);
+                    });
+                }
+                vis.binds.history.eventList.update($div);
+            }
+        },
+        sparkLine: {
+            update: function ($div) {
+                var data = $div.data('options');
+                if (!data.oid || !data.instance) {
+                    $div.sparkline([0,0], {
+                        width: $div.width(),
+                        height: $div.height(),
+                        lineColor: data.lineColor,
+                        fillColor: data.fillColor,
+                        chartRangeMin: data.min === '' || data.min === null || data.min === 'undefined' ? undefined : parseFloat(data.min),
+                        chartRangeMax: data.max === '' || data.max === null || data.max === 'undefined' ? undefined : parseFloat(data.max),
+                        lineWidth: parseInt(data.lineWidth, 10) || 1
+                    });
+                } else {
+                    vis.getHistory(data.oid, {
+                        instance:   data.instance,
+                        count:      parseInt(data.points, 10) || 10,
+                        aggregate:  data.aggregate || 'average',
+                        start:      vis.binds.history.eventList.intervals[data.time_interval] ? new Date().getTime() - vis.binds.history.eventList.intervals[data.time_interval] : undefined,
+                        end:        new Date().getTime() + 5000,
+                        timeout:    2000
+                    }, function (err, result) {
+                        var data = $div.data('options');
+                        if (err) console.log(err);
+                        if (result && result.length) {
+                            var values = [];
+                            for (var i = 0; i < result.length; i++) {
+                                values.push(result[i].val)
+                            }
+                            var barWidth = $div.width() / result.length - (parseFloat(data.barSpacing) || 1);
+
+                            $div.sparkline(values, {
+                                type: data.chartType || 'line',
+                                width: $div.width(),
+                                height: $div.height(),
+                                lineColor: data.lineColor || undefined,
+                                barColor: data.barColor || undefined,
+                                negBarColor: data.negBarColor || undefined,
+                                zeroColor: data.zeroColor || undefined,
+                                fillColor: data.fillColor || undefined,
+                                barWidth: barWidth,
+                                disableTooltips: data.disableTooltips || undefined,
+                                barSpacing: parseFloat(data.barSpacing) || 1,
+                                chartRangeMin: data.min === '' || data.min === null || data.min === 'undefined' ? undefined : parseFloat(data.min),
+                                chartRangeMax: data.max === '' || data.max === null || data.max === 'undefined' ? undefined : parseFloat(data.max),
+                                lineWidth: parseInt(data.lineWidth, 10) || 1
+                            });
+                        } else {
+                            $div.sparkline([0,0], {
+                                width: $div.width(),
+                                height: $div.height(),
+                                lineColor: data.lineColor || undefined,
+                                fillColor: data.fillColor || undefined,
+                                chartRangeMin: data.min === '' || data.min === null || data.min === 'undefined' ? undefined : parseFloat(data.min),
+                                chartRangeMax: data.max === '' || data.max === null || data.max === 'undefined' ? undefined : parseFloat(data.max),
+                                lineWidth: parseInt(data.lineWidth, 10) || 1
+                            });
+                        }
+                    });
+                }
+
+            },
+            init: function (el, view, data) {
+                var $div = $(el);
+
+                var _data = {};
+                for (var s  in data) {
+                    if (s[0] !== '_' && data.hasOwnProperty(s) && typeof data[s] !== 'object' && typeof data[s] !== 'function') {
+                        _data[s] = data[s];
+                    }
+                }
+                data = null;
+                $div.data('options', _data);
+
+                if (_data.oid && _data.instance) {
+                    vis.states.bind(_data.oid + '.val', function () {
+                        vis.binds.history.sparkLine.update($div);
+                    });
+                    // update every x seconds
+                    if (!vis.editMode) {
+                        $div.data('timer', setInterval(function () {
+                            vis.binds.history.sparkLine.update($div);
+                        }, parseInt(vis.binds.history.eventList.intervals[_data.time_interval] / (parseInt(_data.points, 10) || 10), 10)));
+                    }
+                }
+                vis.binds.history.sparkLine.update($div);
+            }
+        }
+    };
+
+    if (vis.editMode) {
+        vis.binds.history.onHidChanged = function (widgetID, view, newId, fields) {
+            var obj = vis.objects[newId];
+            if (!obj || !obj.common) return null;
+            var changed = [];
+            var actualInstance = vis.views[view].widgets[widgetID].data.instance;
+            // Check if actual instance still in options
+            var firstInstance = '';
+            var found = false;
+            for (var h in obj.common.history) {
+                if (obj.common.history[h].enabled) {
+                    if (!firstInstance) firstInstance = h;
+                    if (h === actualInstance) {
+                        found = true;
+                        break;
+                    }
+                }
+            }
+            if (!found) {
+                changed.push('instance');
+                vis.views[view].widgets[widgetID].data.instance = firstInstance;
+            }
+            return changed.length ? changed : null;
+        };
+    }
+
+    vis.binds.history.showVersion();
+</script>
+
+<script id="tplOsm"
+        type="text/ejs"
+        class="vis-tpl"
+        data-vis-set="map"
+        data-vis-name="Open Street Map"
+        data-vis-type="map"
+        data-vis-prev='<img src="widgets/map/img/Prev_tplHistoryEventList.png"></img>'
+        data-vis-attrs="oid/hid/onHidChanged;instance/history;"
+        data-vis-attrs0="group.advanced;max_lines[6]/slider,1,100,1;time_interval_min/select,1 second,10 seconds,30 seconds,1 minute,2 minutes,5 minutes,10 minutes,30 minutes,1 hour,2 hours,4 hours,8 hours,12 hours,24 hours;"
+        data-vis-attrs1="format_date[hh:mm:ss.sss]/auto,YYYY.MM.DD hh:mm:ss,DD.MM.YYYY hh:mm:ss,YYYY.MM.DD,DD.MM.YYYY,YYYY/MM/DD hh:mm:ss,YYYY/MM/DD,hh:mm:ss;timeAsInterval/checkbox;inverseOrder/checkbox;"
+        data-vis-attrs2="group.columns;table_attr;header_attr;"
+        data-vis-attrs3="time_name[Time];time_hide/checkbox;time_width[100]/slider,0,300,1;time_attr;"
+        data-vis-attrs4="val_name[Value];val_hide/checkbox;val_width/slider,0,300,1;val_attr[text-align: center§];"
+        data-vis-attrs5="from_name[Form];from_hide[true]/checkbox;from_width/slider,0,300,1;from_attr;"
+        data-vis-attrs6="class[vis-style-green-gray]/hidden"
+        >
+    <div class="vis-widget <%== this.data.attr('class') %>" style="overflow: hidden; width: 210px; height: 170px;" id="<%= this.data.attr('wid') %>">
+        <div class="vis-widget-body" <%= (el) -> vis.binds.history.eventList.init(el, this.view, this.data) %>></div>
+    </div>
+</script>
+
+<script id="tplGoogleMap"
+        type="text/ejs"
+        class="vis-tpl"
+        data-vis-set="map"
+        data-vis-name="Google Map"
+        data-vis-type="history"
+        data-vis-update-style="true"
+        data-vis-prev='<img src="widgets/map/img/Prev_tplHistorySparkLine.png"></img>'
+        data-vis-attrs="oid/hid/onHidChanged;instance/history;aggregate[average]/select,average,min,max,total;chartType[line]/select,line,bar;"
+        data-vis-attrs0="points[20]/slider,1,100,1;time_interval[10 minutes]/select,1 second,10 seconds,30 seconds,1 minute,2 minutes,5 minutes,10 minutes,30 minutes,1 hour,2 hours,4 hours,8 hours,12 hours,24 hours;;min;max;disableTooltips/checkbox;"
+        data-vis-attrs1="group.line;lineColor/color;fillColor/color;lineWidth/slider,1,10,1;"
+        data-vis-attrs2="group.bar;barColor/color;negBarColor/color;zeroColor/color;min;max;barSpacing/slider,1,10,1;"
+>
+    <div class="vis-widget <%== this.data.attr('class') %>" style="overflow: hidden; width: 210px; height: 170px;" id="<%= this.data.attr('wid') %>">
+        <div class="vis-widget-body" <%= (el) -> vis.binds.history.sparkLine.init(el, this.view, this.data) %>></div>
+    </div>
+</script>

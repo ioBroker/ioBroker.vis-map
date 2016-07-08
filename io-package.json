@@ -1,0 +1,41 @@
+{
+    "common": {
+        "name":                     "vis-map",
+        "version": "0.1.0",
+        "title":                    "ioBroker Visualisation - map Widgets",
+		"news": {
+            "0.1.0": {
+                "en": "initial commit",
+                "de": "initial commit",
+                "ru": "initial commit"
+            }
+        },
+        "desc": {
+            "en":                   "Map Widgets for ioBroker.vis",
+            "de":                   "Karten-Widgets für ioBroker.vis",
+            "ru":                   "Widgets с картами для ioBroker.vis"
+        },
+        "platform":                 "Javascript/Node.js",
+        "icon":                     "vis-map.png",
+        "enabled":                  true,
+        "mode":                     "once",
+        "extIcon":                  "https://raw.githubusercontent.com/ioBroker/ioBroker.vis-map/master/admin/vis-map.png",
+        "keywords":                 ["map", "vis", "GUI", "graphical", "scada"],
+        "readme":                   "https://github.com/ioBroker/ioBroker.vis-map/blob/master/README.md",
+        "authors": [
+            "Pmant <patrickmo@gmx.de>"
+        ],
+        "localLink":                "%web_protocol%://%ip%:%web_port%/vis/edit.html",
+        "license":                  "MIT",
+        "dependencies":             ["vis"],
+        "onlyWWW":                  true,
+        "singleton":                true,
+        "type":                     "vis",
+	    "restartAdapters":          ["vis"]
+    },
+    "native": {
+        "googleApiKey":  ""
+    },
+    "instanceObjects": [
+    ]
+}

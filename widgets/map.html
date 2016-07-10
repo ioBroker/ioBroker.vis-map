@@ -157,7 +157,11 @@
 
                 if (!$('#osm_map').length) {
                     var script = document.createElement('script');
-                    script.src = '//cdnjs.cloudflare.com/ajax/libs/openlayers/2.13.1/OpenLayers.js';
+                    if (window.location.protocol === 'file:') {
+                        script.src = 'https://cdnjs.cloudflare.com/ajax/libs/openlayers/2.13.1/OpenLayers.js';
+                    } else {
+                        script.src = '//cdnjs.cloudflare.com/ajax/libs/openlayers/2.13.1/OpenLayers.js';
+                    }
                     script.id = 'osm_map';
                     document.head.appendChild(script);
                     $('#osm_map').load(function () {

@@ -15,6 +15,9 @@ You can get it [here](https://console.developers.google.com/flows/enableapi?apii
 
 ## Changelog
 
+### 0.1.1 (2016-07-17)
+- (bluefox) remove unused files
+
 ### 0.1.0 (2016-07-08)
 - (bluefox) initial checkin
 

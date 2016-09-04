@@ -1,7 +1,7 @@
 <!--
     ioBroker.vis map widgets
 
-    version: "0.1.2"
+    version: "0.1.3"
 
     Copyright 2016 bluefox<dogafox@gmail.com>
 
@@ -44,7 +44,7 @@
     }
 
     vis.binds.map = {
-        version: "0.1.2",
+        version: "0.1.3",
         showVersion: function () {
             if (vis.binds.map.version) {
                 console.log('Version vis-map: ' + vis.binds.map.version);
@@ -232,7 +232,7 @@
                 var lat = parseFloat(parts[1].replace(',', '.').trim());
                 return new google.maps.LatLng(lat, lon);
             },
-            setCenter: function (map, oMarkers) {
+            setCenter: function (map, oMarkers, maxZoom) {
                 var bounds = new google.maps.LatLngBounds();
                 for (var m = 0; m < oMarkers.length; m++) {
                     bounds.extend(oMarkers[m].getPosition());
@@ -242,6 +242,11 @@
                 } else if (oMarkers.length) {
                     map.panTo(oMarkers[0].getPosition());
                 }
+
+                var listener = google.maps.event.addListener(map, 'idle', function() {
+                    if (map.getZoom() > maxZoom) map.setZoom(maxZoom);
+                    google.maps.event.removeListener(listener);
+                });
             },
             setMarkers: function (map, markers) {
                 var result = [];
@@ -300,12 +305,13 @@
 
 
                 var markers = vis.binds.map.googleMap.setMarkers(map, markerList);
-                vis.binds.map.googleMap.setCenter(map, markers);
+                vis.binds.map.googleMap.setCenter(map, markers, maxZoom);
                 return {map: map, markers: markers};
             },
             update: function ($div) {
                 var obj     = $div.data('object');
                 var markers = $div.data('markers');
+                var maxZoom = $div.data('zoom');
 
                 for (var m = 0; m < markers.length; m++) {
                     if (vis.binds.map.isLonLatIsOID(markers[m].lon) && vis.binds.map.isLonLatIsOID(markers[m].lat)) {
@@ -315,7 +321,7 @@
                     }
                 }
 
-                vis.binds.map.googleMap.setCenter(obj.map, obj.markers);
+                vis.binds.map.googleMap.setCenter(obj.map, obj.markers, maxZoom);
             },
             init: function (el, view, data) {
                 var $div = $(el);
@@ -356,7 +362,6 @@
                     noZoomAndPan:   data.noZoomAndPan || false
                 };
                 var markers = [];
-
 
                 for (var u = 1; u <= data.mCount; u++) {
                     if (data['markersLon-oid' + u]) {

@@ -15,6 +15,9 @@ You can get it [here](https://console.developers.google.com/flows/enableapi?apii
 
 ## Changelog
 
+### 0.1.3 (2016-09-04)
+- (bluefox) fix google map max zoom
+
 ### 0.1.1 (2016-07-17)
 - (bluefox) remove unused files
 

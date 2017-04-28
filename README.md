@@ -14,6 +14,8 @@ Actually supported only Open Stree Maps and Google. To use Google Maps you shoul
 You can get it [here](https://console.developers.google.com/flows/enableapi?apiid=maps_backend,geocoding_backend,directions_backend,distance_matrix_backend,elevation_backend&keyType=CLIENT_SIDE&reusekey=true)
 
 ## Changelog
+### 0.1.4 (2017-04-28)
+- (bluefox) add traffic layer for google maps
 
 ### 0.1.3 (2016-09-04)
 - (bluefox) fix google map max zoom

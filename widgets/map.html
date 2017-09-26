@@ -1,7 +1,7 @@
 <!--
     ioBroker.vis map widgets
 
-    version: "0.1.4"
+    version: "1.0.0"
 
     Copyright 2016-2017 bluefox<dogafox@gmail.com>
 
@@ -18,6 +18,7 @@
             "group_markers":    {"en": "Markers",               "de": "Markers",                "ru": "Маркеры"},
             "markersLon-oid":   {"en": "Longitude ID",          "de": "Längengrad ID",          "ru": "ID долготы"},
             "markersLat-oid":   {"en": "Latitude ID",           "de": "Breitengrad ID",         "ru": "ID широты"},
+            "markersSwap":      {"en": "Swap Latitude and Longitude", "de": "Tausche Längengrad mit Breitengrad",   "ru": "Поменять местами широту и долготу"},
             "markersImage":     {"en": "Icon URL",              "de": "Bild URL",               "ru": "URL картинки"},
             "markersWidth":     {"en": "Width",                 "de": "Breite",                 "ru": "Ширина"},
             "markersHeight":    {"en": "Height",                "de": "Höche",                  "ru": "Высота"},
@@ -45,7 +46,7 @@
     }
 
     vis.binds.map = {
-        version: "0.1.4",
+        version: "1.0.0",
         showVersion: function () {
             if (vis.binds.map.version) {
                 console.log('Version vis-map: ' + vis.binds.map.version);
@@ -56,6 +57,7 @@
         updateIntervalTimer: null,
         isLonLatIsOID: function (value) {
             if (typeof value !== 'string') return false;
+            if (!value) return false;
             if (value[0] === '-') return false;
             if (value[0] >= '0' && value[0] <= '9') return false;
             return true;
@@ -81,15 +83,16 @@
                     var icon   = new OpenLayers.Icon(url, size, offset);
                     var marker;
                     if (vis.binds.map.isLonLatIsOID(markers[m].lon) && vis.binds.map.isLonLatIsOID(markers[m].lat)) {
-                        marker = new OpenLayers.Marker(vis.binds.map.osm.text2position(vis.states[markers[m].lon + '.val'] + ';' + vis.states[markers[m].lat + '.val']), icon);
+                        marker = new OpenLayers.Marker(vis.binds.map.osm.text2position(vis.states[markers[m].lon + '.val'] + ';' + vis.states[markers[m].lat + '.val'], markers[m].swap), icon);
                     } else if (vis.binds.map.isLonLatIsOID(markers[m].lon)) {
-                        marker = new OpenLayers.Marker(vis.binds.map.osm.text2position(vis.states[markers[m].lon + '.val']), icon);
+                        marker = new OpenLayers.Marker(vis.binds.map.osm.text2position(vis.states[markers[m].lon + '.val'], markers[m].swap), icon);
                     } else {
-                        marker = new OpenLayers.Marker(vis.binds.map.osm.text2position(markers[m].lon.toString() + (markers[m].lat ? ';' + markers[m].lat : '')), icon);
+                        marker = new OpenLayers.Marker(vis.binds.map.osm.text2position(markers[m].lon.toString() + (markers[m].lat ? ';' + markers[m].lat : ''), markers[m].swap), icon);
                     }
+                    opacity = parseFloat(opacity);
 
-                    if (opacity == 0) marker.display(opacity != 0);
-                    if (opacity != 1 && opacity != 0) marker.setOpacity(opacity);
+                    if (opacity === 0) marker.display(opacity !== 0);
+                    if (opacity !== 1 && opacity !== 0) marker.setOpacity(opacity);
 
                     list.push(marker);
                     result.addMarker(marker);
@@ -106,13 +109,17 @@
                     map.setCenter(vis.binds.map.osm.text2position('5.55;6.66'), parseFloat(maxZoom));
                 }
             },
-            text2position: function(text) {
+            text2position: function (text, isSwap) {
                 var parts = text.split(';');
                 if (parts.length < 2) parts = text.split(',');
                 if (parts.length < 2) return null;
                 var lon = parseFloat(parts[0].replace(',', '.').trim());
                 var lat = parseFloat(parts[1].replace(',', '.').trim());
-                return new OpenLayers.LonLat(lon, lat).transform(vis.binds.map.osm.fromProjection, vis.binds.map.osm.toProjection);
+                if (isSwap) {
+                    return new OpenLayers.LonLat(lat, lon).transform(vis.binds.map.osm.fromProjection, vis.binds.map.osm.toProjection);
+                } else {
+                    return new OpenLayers.LonLat(lon, lat).transform(vis.binds.map.osm.fromProjection, vis.binds.map.osm.toProjection);
+                }
             },
             showMap: function(divName, markerList, maxZoom) {
                 var map = new OpenLayers.Map(divName);
@@ -136,22 +143,22 @@
 
                 for (var m = 0; m < markers.length; m++) {
                     if (vis.binds.map.isLonLatIsOID(markers[m].lon) && vis.binds.map.isLonLatIsOID(markers[m].lat)) {
-                        obj.markers[m].lonlat = vis.binds.map.osm.text2position(vis.states[markers[m].lon + '.val'] + ';' + vis.states[markers[m].lat + '.val']);
+                        obj.markers[m].lonlat = vis.binds.map.osm.text2position(vis.states[markers[m].lon + '.val'] + ';' + vis.states[markers[m].lat + '.val'], markers[m].swap);
                         obj.layer.removeMarker(obj.markers[m]);
                         obj.layer.addMarker(obj.markers[m]);
                     } else if (vis.binds.map.isLonLatIsOID(markers[m].lon)) {
-                        obj.markers[m].lonlat = vis.binds.map.osm.text2position(vis.states[markers[m].lon + '.val']);
+                        obj.markers[m].lonlat = vis.binds.map.osm.text2position(vis.states[markers[m].lon + '.val'], markers[m].swap);
                         obj.layer.removeMarker(obj.markers[m]);
                         obj.layer.addMarker(obj.markers[m]);
                     }
                 }
                 vis.binds.map.osm.setCenter(obj.map, obj.layer, zoom);
             },
-            init: function (el, view, data) {
-                var $_div = $('#map_' + data.wid);
-                if (!$_div.length) {
+            init: function (wid, view, data, style) {
+                var $div = $('#' + wid);
+                if (!$div.length) {
                     setTimeout(function () {
-                        vis.binds.map.osm.init(el, view, data);
+                        vis.binds.map.osm.init(wid, view, data, style);
                     }, 100);
                     return;
                 }
@@ -167,19 +174,19 @@
                     document.head.appendChild(script);
                     $('#osm_map').load(function () {
                         vis.binds.map.osm.loaded = true;
-                        vis.binds.map.osm.init(el, view, data);
+                        vis.binds.map.osm.init(wid, view, data, style);
                     });
                     return;
                 } else if (!vis.binds.map.osm.loaded) {
                     $('#osm_map').load(function () {
-                        vis.binds.map.osm.init(el, view, data);
+                        vis.binds.map.osm.init(wid, view, data, style);
                     });
                     return;
                 }
                 if (!vis.binds.map.osm.fromProjection) vis.binds.map.osm.fromProjection = new OpenLayers.Projection('EPSG:4326');   // Transform from WGS 1984
                 if (!vis.binds.map.osm.toProjection)   vis.binds.map.osm.toProjection   = new OpenLayers.Projection('EPSG:900913'); // to Spherical Mercator Projection
 
-                var $div = $(el);
+                var $map = $div.find('.vis-widget-body');
 
                 var markers = [];
 
@@ -197,41 +204,56 @@
                             offsetY:    data['markersOffsetX'   + u],
                             opacity:    data['markersOpacity'   + u],
                             text:       data['markersText'      + u] || undefined,
-                            label:      data['markersLabel'     + u] || undefined
+                            label:      data['markersLabel'     + u] || undefined,
+                            swap:       data['markersSwap'      + u] === true || data['markersSwap'      + u] === 'true'
                         };
 
                         markers.push(marker);
                     }
                 }
 
-                $div.data('object',  vis.binds.map.osm.showMap('map_' + data.wid, markers, parseInt(data.maxZoom, 10) || 20));
-                $div.data('markers', markers);
-                $div.data('zoom',    parseInt(data.maxZoom, 10) || 20);
-                if (data.hideControls) $div.find('.olControlZoom').hide();
+                $map.data('object',  vis.binds.map.osm.showMap('map_' + data.wid, markers, parseInt(data.maxZoom, 10) || 20));
+                $map.data('markers', markers);
+                $map.data('zoom',    parseInt(data.maxZoom, 10) || 20);
+                if (data.hideControls) $map.find('.olControlZoom').hide();
+
+                function onChange() {
+                    vis.binds.map.osm.update($map);
+                }
+                var bound = [];
 
                 for (u = 1; u <= data.mCount; u++) {
                     if (vis.binds.map.isLonLatIsOID(data['markersLon-oid' + u])) {
-                        vis.states.bind(data['markersLon-oid' + u] + '.val', function () {
-                            vis.binds.map.osm.update($div);
-                        });
+                        vis.states.bind(data['markersLon-oid' + u] + '.val', onChange);
+                        bound.push(data['markersLon-oid' + u] + '.val');
                     }
                     if (vis.binds.map.isLonLatIsOID(data['markersLat-oid' + u])) {
-                        vis.states.bind(data['markersLat-oid' + u] + '.val', function () {
-                            vis.binds.map.osm.update($div);
-                        });
+                        vis.states.bind(data['markersLat-oid' + u] + '.val', onChange);
+                        bound.push(data['markersLat-oid' + u] + '.val');
                     }
+                }
+
+                if (bound.length) {
+                    // remember all ids, that bound
+                    $div.data('bound', bound);
+                    // remember bind handler
+                    $div.data('bindHandler', onChange);
                 }
             }
         },
         googleMap: {
             loaded: false,
-            text2position: function(text) {
+            text2position: function (text, isSwap) {
                 var parts = text.split(';');
                 if (parts.length < 2) parts = text.split(',');
                 if (parts.length < 2) return null;
                 var lon = parseFloat(parts[0].replace(',', '.').trim());
                 var lat = parseFloat(parts[1].replace(',', '.').trim());
-                return new google.maps.LatLng(lat, lon);
+                if (isSwap) {
+                    return new google.maps.LatLng(lon, lat);
+                } else {
+                    return new google.maps.LatLng(lat, lon);
+                }
             },
             setCenter: function (map, oMarkers, maxZoom) {
                 var bounds = new google.maps.LatLngBounds();
@@ -268,12 +290,13 @@
                     if (image && offsetX !== null && offsetY !== null) image.anchor = new google.maps.Point(offsetY, offsetX);
 
                     var position;
+
                     if (vis.binds.map.isLonLatIsOID(markers[m].lon) && vis.binds.map.isLonLatIsOID(markers[m].lat)) {
-                        position = vis.binds.map.googleMap.text2position(vis.states[markers[m].lon + '.val'] + ';' + vis.states[markers[m].lat + '.val']);
+                        position = vis.binds.map.googleMap.text2position(vis.states[markers[m].lon + '.val'] + ';' + vis.states[markers[m].lat + '.val'], markers[m].swap);
                     } else if (vis.binds.map.isLonLatIsOID(markers[m].lon)) {
-                        position = vis.binds.map.googleMap.text2position(vis.states[markers[m].lon + '.val']);
+                        position = vis.binds.map.googleMap.text2position(vis.states[markers[m].lon + '.val'], markers[m].swap);
                     } else {
-                        position = vis.binds.map.googleMap.text2position(markers[m].lon.toString() + (markers[m].lat ? ';' + markers[m].lat : ''));
+                        position = vis.binds.map.googleMap.text2position(markers[m].lon.toString() + (markers[m].lat ? ';' + markers[m].lat : ''), markers[m].swap);
                     }
                     var marker = new google.maps.Marker({
                         position:   position,
@@ -282,13 +305,15 @@
                         map:        map,
                         title:      markers[m].text || undefined
                     });
-                    if (opacity !== 1) marker.setOpacity(opacity);
+                    if (opacity !== 1) {
+                        marker.setOpacity(opacity);
+                    }
                     result.push(marker);
                 }
                 return result;
             },
-            showMap: function(divElem, markerList, maxZoom, options) {
-                var options = options || {};
+            showMap: function (divElem, markerList, maxZoom, options) {
+                options = options || {};
                 options.mapTypeId = options.mapTypeId || google.maps.MapTypeId.ROADMAP;
 
                 var map = new google.maps.Map(divElem, {
@@ -321,27 +346,25 @@
 
                 for (var m = 0; m < markers.length; m++) {
                     if (vis.binds.map.isLonLatIsOID(markers[m].lon) && vis.binds.map.isLonLatIsOID(markers[m].lat)) {
-                        obj.markers[m].setPosition(vis.binds.map.googleMap.text2position(vis.states[markers[m].lon + '.val'] + ';' + vis.states[markers[m].lat + '.val']));
+                        obj.markers[m].setPosition(vis.binds.map.googleMap.text2position(vis.states[markers[m].lon + '.val'] + ';' + vis.states[markers[m].lat + '.val'], markers[m].swap));
                     } else if (vis.binds.map.isLonLatIsOID(markers[m].lon)) {
-                        obj.markers[m].setPosition(vis.binds.map.googleMap.text2position(vis.states[markers[m].lon + '.val']));
+                        obj.markers[m].setPosition(vis.binds.map.googleMap.text2position(vis.states[markers[m].lon + '.val'], markers[m].swap));
                     }
                 }
 
                 vis.binds.map.googleMap.setCenter(obj.map, obj.markers, maxZoom);
             },
-            init: function (el, view, data) {
-                var $div = $(el);
-
-                var $_div = $('#map_' + data.wid);
-                if (!$_div.length) {
+            init: function (wid, view, data, style) {
+                var $div = $('#' + wid);
+                if (!$div.length) {
                     setTimeout(function () {
-                        vis.binds.map.googleMap.init(el, view, data);
+                        vis.binds.map.googleMap.init(wid, view, data, style);
                     }, 100);
                     return;
                 }
-
+                var $map = $div.find('.vis-widget-body');
                 if (!data.apiKey) {
-                    $div.append(_('No API key'));
+                    $map.append(_('No API key'));
                     return;
                 }
 
@@ -352,12 +375,12 @@
                     document.head.appendChild(script);
                     $('#google_map').load(function () {
                         vis.binds.map.googleMap.loaded = true;
-                        vis.binds.map.googleMap.init(el, view, data);
+                        vis.binds.map.googleMap.init(wid, view, data, style);
                     });
                     return;
                 } else if (!vis.binds.map.googleMap.loaded) {
                     $('#google_map').load(function () {
-                        vis.binds.map.googleMap.init(el, view, data);
+                        vis.binds.map.googleMap.init(wid, view, data, style);
                     });
                     return;
                 }
@@ -382,27 +405,36 @@
                             offsetY:    data['markersOffsetX'   + u],
                             opacity:    data['markersOpacity'   + u],
                             text:       data['markersText'      + u] || undefined,
-                            label:      data['markersLabel'     + u] || undefined
+                            label:      data['markersLabel'     + u] || undefined,
+                            swap:       data['markersSwap'      + u] === true || data['markersSwap'      + u] === 'true'
                         };
                         markers.push(marker);
                     }
                 }
 
-                $div.data('markers', markers);
-                $div.data('zoom',    parseInt(data.maxZoom, 10) || 20);
-                $div.data('object', vis.binds.map.googleMap.showMap($div[0], markers, parseInt(data.maxZoom, 10) || 20, options));
+                $map.data('markers', markers);
+                $map.data('zoom',    parseInt(data.maxZoom, 10) || 20);
+                $map.data('object', vis.binds.map.googleMap.showMap($map[0], markers, parseInt(data.maxZoom, 10) || 20, options));
 
+                function onChange() {
+                    vis.binds.map.googleMap.update($map);
+                }
+                var bound = [];
                 for (u = 1; u <= data.mCount; u++) {
                     if (vis.binds.map.isLonLatIsOID(data['markersLon-oid' + u])) {
-                        vis.states.bind(data['markersLon-oid' + u] + '.val', function () {
-                            vis.binds.map.googleMap.update($div);
-                        });
+                        vis.states.bind(data['markersLon-oid' + u] + '.val', onChange);
+                        bound.push(data['markersLon-oid' + u] + '.val');
                     }
                     if (vis.binds.map.isLonLatIsOID(data['markersLat-oid' + u])) {
-                        vis.states.bind(data['markersLat-oid' + u] + '.val', function () {
-                            vis.binds.map.googleMap.update($div);
-                        });
+                        vis.states.bind(data['markersLat-oid' + u] + '.val', onChange);
+                        bound.push(data['markersLat-oid' + u] + '.val');
                     }
+                }
+                if (bound.length) {
+                    // remember all ids, that bound
+                    $div.data('bound', bound);
+                    // remember bind handler
+                    $div.data('bindHandler', onChange);
                 }
             }
         }
@@ -447,10 +479,10 @@
         data-vis-update-style="true"
         data-vis-prev='<img src="widgets/map/img/Prev_tplOsm.png"></img>'
         data-vis-attrs="mCount[1]/number,1,20,1;maxZoom[14]/slider,0,18,1;hideControls/checkbox;"
-        data-vis-attrs0="group.markers/byindex;markersLon-oid(1-mCount)/id,gps;markersLat-oid(1-mCount)/id,gps;markersImage(1-mCount)/image;markersWidth(1-mCount)/slider,1,100,1;markersHeight(1-mCount)/slider,1,100,1;markersOffsetX(1-mCount)/slider,1,100,1;markersOffsetY(1-mCount)/slider,1,100,1;markersOpacity(1-mCount)/slider,0,1,0.05;"
+        data-vis-attrs0="group.markers/byindex;markersLon-oid(1-mCount)/id,gps;markersLat-oid(1-mCount)/id,gps;markersSwap(1-mCount)/checkbox;markersImage(1-mCount)/image;markersWidth(1-mCount)/slider,1,100,1;markersHeight(1-mCount)/slider,1,100,1;markersOffsetX(1-mCount)/slider,1,100,1;markersOffsetY(1-mCount)/slider,1,100,1;markersOpacity(1-mCount)/slider,0,1,0.05;"
         >
     <div class="vis-widget <%== this.data.attr('class') %>" style="overflow: hidden; width: 200px; height: 200px;" id="<%= this.data.attr('wid') %>">
-        <div class="vis-widget-body" id="map_<%= this.data.attr('wid') %>" <%= (el) -> vis.binds.map.osm.init(el, this.view, this.data) %> style="position: relative;"></div>
+        <div class="vis-widget-body" id="map_<%= this.data.attr('wid') %>" <%= (el) -> vis.binds.map.osm.init(this.data.wid, this.view, this.data, this.style) %> style="position: relative;"></div>
     </div>
 </script>
 
@@ -463,9 +495,9 @@
         data-vis-update-style="true"
         data-vis-prev='<img src="widgets/map/img/Prev_tplGoogleMap.png"></img>'
         data-vis-attrs="mCount[1]/number,1,20,1;maxZoom[14]/slider,0,30,1;mapTypeId/select,ROADMAP,SATELLITE,HYBRID,TERRAIN;hideControls/checkbox;noZoomAndPan/checkbox;apiKey//onIdChanged;showTraffic/checkbox;"
-        data-vis-attrs0="group.markers/byindex;markersLon-oid(1-mCount)/id,gps;markersLat-oid(1-mCount)/id,gps;markersImage(1-mCount)/image;markersWidth(1-mCount)/slider,1,100,1;markersHeight(1-mCount)/slider,1,100,1;markersOffsetX(1-mCount)/slider,1,100,1;markersOffsetY(1-mCount)/slider,1,100,1;markersText(1-mCount);markersLabel(1-mCount);markersOpacity(1-mCount)/slider,0,1,0.05;"
+        data-vis-attrs0="group.markers/byindex;markersLon-oid(1-mCount)/id,gps;markersLat-oid(1-mCount)/id,gps;markersSwap(1-mCount)/checkbox;markersImage(1-mCount)/image;markersWidth(1-mCount)/slider,1,100,1;markersHeight(1-mCount)/slider,1,100,1;markersOffsetX(1-mCount)/slider,1,100,1;markersOffsetY(1-mCount)/slider,1,100,1;markersText(1-mCount);markersLabel(1-mCount);markersOpacity(1-mCount)/slider,0,1,0.05;"
 >
-    <div class="vis-widget <%== this.data.attr('class') %>" style="overflow: hidden; width: 200px; height: 200px;background-color: none !important" id="<%= this.data.attr('wid') %>">
-        <div class="vis-widget-body" id="map_<%= this.data.attr('wid') %>" <%= (el) -> vis.binds.map.googleMap.init(el, this.view, this.data) %>></div>
+    <div class="vis-widget <%== this.data.attr('class') %>" style="overflow: hidden; width: 200px; height: 200px; background-color: none !important" id="<%= this.data.attr('wid') %>">
+        <div class="vis-widget-body" <%= (el) -> vis.binds.map.googleMap.init(this.data.wid, this.view, this.data, this.style) %>></div>
     </div>
 </script>

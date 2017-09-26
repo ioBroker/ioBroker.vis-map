@@ -1,9 +1,14 @@
 {
     "common": {
         "name":                     "vis-map",
-        "version": "0.1.4",
+        "version": "1.0.0",
         "title":                    "ioBroker Visualisation - map Widgets",
 		"news": {
+            "1.0.0": {
+                "en": "allow to swap longitude and latitude",
+                "de": "Tauschen von Breitengrad mit Längengrad möglich",
+                "ru": "Можно поменять широту и долготу местами"
+            },
 			"0.1.4": {
                 "en": "add traffic layer for google maps",
                 "de": "Zeige Verkehrsinformation für Google maps",

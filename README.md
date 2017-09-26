@@ -13,7 +13,18 @@ Widgets, that can show coordinates on a map.
 Actually supported only Open Stree Maps and Google. To use Google Maps you should get the API Key for google maps.
 You can get it [here](https://console.developers.google.com/flows/enableapi?apiid=maps_backend,geocoding_backend,directions_backend,distance_matrix_backend,elevation_backend&keyType=CLIENT_SIDE&reusekey=true)
 
+## Usage
+You can bind longitude and latitude apart or just place into **longitude** the Object ID with the value like following:
+- 7.0001;49.0000 (longitude ; latitude)
+- 7,0001;49,0000 (longitude ; latitude)
+- 7.0001,49.0000 (longitude , latitude)
+- 49.0000,7.0001 (latitude , longitude + swap flag)
+- 49.0000;7.0001 (latitude ; longitude + swap flag)
+
 ## Changelog
+### 1.0.0 (2017-09-26)
+- (bluefox) allow to swap longitude and latitude
+
 ### 0.1.4 (2017-04-28)
 - (bluefox) add traffic layer for google maps
 

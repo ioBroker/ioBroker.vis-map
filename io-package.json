@@ -1,25 +1,25 @@
 {
     "common": {
-        "name":                     "vis-map",
+        "name": "vis-map",
         "version": "1.0.0",
-        "title":                    "ioBroker Visualisation - map Widgets",
-		"news": {
+        "title": "ioBroker Visualisation - map Widgets",
+        "news": {
             "1.0.0": {
                 "en": "allow to swap longitude and latitude",
                 "de": "Tauschen von Breitengrad mit Längengrad möglich",
                 "ru": "Можно поменять широту и долготу местами"
             },
-			"0.1.4": {
+            "0.1.4": {
                 "en": "add traffic layer for google maps",
                 "de": "Zeige Verkehrsinformation für Google maps",
                 "ru": "Показать загруженность дорог на Google maps"
             },
-			"0.1.3": {
+            "0.1.3": {
                 "en": "fix google map max zoom",
                 "de": "Korrigiere maxZoom bei google map",
                 "ru": "Исправлен зум для google карты"
             },
-			"0.1.1": {
+            "0.1.1": {
                 "en": "remove unused files",
                 "de": "remove unused files",
                 "ru": "remove unused files"
@@ -31,36 +31,45 @@
             }
         },
         "desc": {
-            "en":                   "Map Widgets for ioBroker.vis",
-            "de":                   "Karten-Widgets für ioBroker.vis",
-            "ru":                   "Widgets с картами для ioBroker.vis"
+            "en": "Map Widgets for ioBroker.vis",
+            "de": "Karten-Widgets für ioBroker.vis",
+            "ru": "Widgets с картами для ioBroker.vis"
         },
-		"titleLang": {
-            "en":                   "vis Maps widgets",
-            "de":                   "vis-Kartenwidgets ",
-            "ru":                   "vis Карты"
+        "titleLang": {
+            "en": "vis Maps widgets",
+            "de": "vis-Kartenwidgets ",
+            "ru": "vis Карты"
         },
-        "platform":                 "Javascript/Node.js",
-        "icon":                     "vis-map.png",
-        "enabled":                  true,
-        "mode":                     "once",
-        "extIcon":                  "https://raw.githubusercontent.com/ioBroker/ioBroker.vis-map/master/admin/vis-map.png",
-        "keywords":                 ["map", "vis", "GUI", "graphical", "scada"],
-        "readme":                   "https://github.com/ioBroker/ioBroker.vis-map/blob/master/README.md",
+        "platform": "Javascript/Node.js",
+        "icon": "vis-map.png",
+        "enabled": true,
+        "mode": "once",
+        "extIcon": "https://raw.githubusercontent.com/ioBroker/ioBroker.vis-map/master/admin/vis-map.png",
+        "keywords": [
+            "map",
+            "vis",
+            "GUI",
+            "graphical",
+            "scada"
+        ],
+        "readme": "https://github.com/ioBroker/ioBroker.vis-map/blob/master/README.md",
         "authors": [
             "Pmant <patrickmo@gmx.de>"
         ],
-        "localLink":                "%web_protocol%://%ip%:%web_port%/vis/edit.html",
-        "license":                  "MIT",
-        "dependencies":             ["vis"],
-        "onlyWWW":                  true,
-        "singleton":                true,
-        "type":                     "vis",
-	    "restartAdapters":          ["vis"]
+        "localLink": "%web_protocol%://%ip%:%web_port%/vis/edit.html",
+        "license": "MIT",
+        "dependencies": [
+            "vis"
+        ],
+        "onlyWWW": true,
+        "singleton": true,
+        "type": "visualization-widgets",
+        "restartAdapters": [
+            "vis"
+        ]
     },
     "native": {
-        "googleApiKey":  ""
+        "googleApiKey": ""
     },
-    "instanceObjects": [
-    ]
+    "instanceObjects": []
 }

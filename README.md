@@ -22,6 +22,9 @@ You can bind longitude and latitude apart or just place into **longitude** the O
 - 49.0000;7.0001 (latitude ; longitude + swap flag)
 
 ## Changelog
+### 1.0.1 (2018-01-08)
+- (bluefox) Fix error if coordinates are empty
+
 ### 1.0.0 (2017-09-26)
 - (bluefox) allow to swap longitude and latitude
 
@@ -38,5 +41,5 @@ You can bind longitude and latitude apart or just place into **longitude** the O
 - (bluefox) initial checkin
 
 ## License
- Copyright (c) 2016 bluefox
+ Copyright (c) 2016-2018 bluefox
  MIT

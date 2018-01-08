@@ -1,18 +1,16 @@
 <html>
+<!-- Materialze style -->
 <head>
-<!-- these 4 files always have to be included -->
-<link rel="stylesheet" type="text/css" href="../../lib/css/themes/jquery-ui/redmond/jquery-ui.min.css"/>
-<link rel="stylesheet" type="text/css" href="../../lib/css/jquery.multiselect-1.13.css"/>
+    <link rel="stylesheet" type="text/css" href="../../css/adapter.css"/>
+    <link rel="stylesheet" type="text/css" href="../../lib/css/materialize.css">
 
-<script type="text/javascript" src="../../lib/js/jquery-1.11.1.min.js"></script>
-<script type="text/javascript" src="../../socket.io/socket.io.js"></script>
-<script type="text/javascript" src="../../lib/js/jquery-ui-1.10.3.full.min.js"></script>
+    <script type="text/javascript" src="../../lib/js/jquery-3.2.1.min.js"></script>
+    <script type="text/javascript" src="../../socket.io/socket.io.js"></script>
 
-<!-- these two file always have to be included -->
-<link rel="stylesheet" type="text/css" href="../../css/adapter.css"/>
-<script type="text/javascript" src="../../js/translate.js"></script>
-<script type="text/javascript" src="../../js/adapter-settings.js"></script>
-<script type="text/javascript" src="words.js"></script>
+    <script type="text/javascript" src="../../js/translate.js"></script>
+    <script type="text/javascript" src="../../lib/js/materialize.js"></script>
+    <script type="text/javascript" src="../../js/adapter-settings.js"></script>
+    <script type="text/javascript" src="words.js"></script>
 
 <script type="text/javascript">
     function setValue(id, value, onChange) {
@@ -74,19 +72,23 @@
 </script>
 </head>
 <body>
-<div id="adapter-container">
-    <table><tr>
-        <td><img src="vis-map.png"></td>
-        <td style="padding-top: 20px;padding-left: 10px"><h3 class="translate">Maps Widgets settings</h3></td>
-    </tr></table>
-
-    <table>
-        <tr>
-            <td><label for="googleApiKey" class="translate">Google Map API key:</label></td>
-            <td><input id="googleApiKey" class="value" /></td>
-            <td><a href="https://developers.google.com/maps/documentation/javascript/get-api-key" target="_blank" class="translate help">Get the Google API Key</a></td>
-        </tr>
-    </table>
+<div class="m adapter-container">
+    <div class="row">
+        <div class="col s12 m4 l2">
+            <img src="vis-map.png" class="logo">
+        </div>
+    </div>
+    <div class="row">
+        <div class="col s12">
+            <input id="googleApiKey" class="value" />
+            <label for="googleApiKey" class="translate">Google Map API key:</label>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col s12">
+            <a href="https://developers.google.com/maps/documentation/javascript/get-api-key" target="_blank" class="translate help">Get the Google API Key</a>
+        </div>
+    </div>
 </div>
 </body>
 </html>

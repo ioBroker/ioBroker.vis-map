@@ -1,7 +1,7 @@
 {
   "name": "iobroker.vis-map",
   "description": "Map Widgets for ioBroker.vis",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "author": {
     "name": "bluefox",
     "email": "dogafox@gmail.com"
@@ -26,11 +26,7 @@
     "map"
   ],
   "devDependencies": {
-    "grunt": "^1.0.1",
-    "grunt-replace": "^1.0.1",
-    "grunt-contrib-jshint": "^1.1.0",
-    "grunt-jscs": "^3.0.1",
-    "grunt-http": "^2.2.0",
+    "gulp": "^3.9.1",
     "mocha": "^4.1.0",
     "chai": "^4.1.2"
   },

@@ -1,9 +1,31 @@
 {
     "common": {
         "name": "vis-map",
-        "version": "1.0.0",
-        "title": "ioBroker Visualisation - map Widgets",
+        "version": "1.0.1",
+        "title": "vis map Widgets",
+        "titleLang": {
+            "en": "vis map Widgets",
+            "de": "vis-Kartenwidgets",
+            "ru": "vis виджеты карт",
+            "pt": "vis map Widgets",
+            "nl": "vis map Widgets",
+            "fr": "vis carte Widgets",
+            "it": "vis mappa Widget",
+            "es": "vis map Widgets",
+            "pl": "vis map Widgets"
+        },
         "news": {
+            "1.0.1": {
+                "en": "Fix error if coordinates are empty",
+                "de": "Fehler beheben, wenn die Koordinaten leer sind",
+                "ru": "Исправить ошибку, если координаты пусты",
+                "pt": "Corrija o erro se as coordenadas estiverem vazias",
+                "nl": "Fout herstellen als coördinaten leeg zijn",
+                "fr": "Correction d'une erreur si les coordonnées sont vides",
+                "it": "Correggi l'errore se le coordinate sono vuote",
+                "es": "Corrige el error si las coordenadas están vacías",
+                "pl": "Napraw błąd, jeśli współrzędne są puste"
+            },
             "1.0.0": {
                 "en": "allow to swap longitude and latitude",
                 "de": "Tauschen von Breitengrad mit Längengrad möglich",
@@ -32,13 +54,14 @@
         },
         "desc": {
             "en": "Map Widgets for ioBroker.vis",
-            "de": "Karten-Widgets für ioBroker.vis",
-            "ru": "Widgets с картами для ioBroker.vis"
-        },
-        "titleLang": {
-            "en": "vis Maps widgets",
-            "de": "vis-Kartenwidgets ",
-            "ru": "vis Карты"
+            "de": "Map Widgets für ioBroker.vis",
+            "ru": "Виджеты карт для ioBroker.vis",
+            "pt": "Map Widgets para ioBroker.vis",
+            "nl": "Kaartwidgets voor ioBroker.vis",
+            "fr": "Widgets cartographiques pour ioBroker.vis",
+            "it": "Widget mappa per ioBroker.vis",
+            "es": "Widgets del mapa para ioBroker.vis",
+            "pl": "Widgety map dla ioBroker.vis"
         },
         "platform": "Javascript/Node.js",
         "icon": "vis-map.png",
@@ -52,6 +75,7 @@
             "graphical",
             "scada"
         ],
+        "materialize": true,
         "readme": "https://github.com/ioBroker/ioBroker.vis-map/blob/master/README.md",
         "authors": [
             "Pmant <patrickmo@gmx.de>"

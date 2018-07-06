@@ -22,6 +22,9 @@ You can bind longitude and latitude apart or just place into **longitude** the O
 - 49.0000;7.0001 (latitude ; longitude + swap flag)
 
 ## Changelog
+### 1.0.2 (2018-07-06)
+- (bluefox) Event click on pins added
+
 ### 1.0.1 (2018-01-08)
 - (bluefox) Fix error if coordinates are empty
 

@@ -1,7 +1,7 @@
 <!--
     ioBroker.vis map widgets
 
-    version: "1.0.1"
+    version: "1.0.2"
 
     Copyright 2016-2018 bluefox<dogafox@gmail.com>
 
@@ -93,6 +93,19 @@
                     if (opacity === 0) marker.display(opacity !== 0);
                     if (opacity !== 1 && opacity !== 0) marker.setOpacity(opacity);
 
+                    if (markers[m].url || markers[m].view) {
+                        (function (mm) {
+                            marker.events.register('click', marker.feature, function() {
+                                if (markers[mm].view) {
+                                    vis.changeView(markers[mm].view, markers[mm].view);
+                                } else {
+                                    document.location = markers[mm].url;
+                                }
+                            });
+                        })(m);
+                    }
+
+
                     list.push(marker);
                     result.addMarker(marker);
                 }
@@ -110,7 +123,7 @@
             },
             text2position: function (text, isSwap) {
                 var parts = (text ||'').toString().split(';');
-                if (parts.length < 2) parts = text.split(',');
+                if (parts.length < 2) parts = (text ||'').split(',');
                 if (parts.length < 2) return null;
                 var lon = parseFloat(parts[0].replace(',', '.').trim());
                 var lat = parseFloat(parts[1].replace(',', '.').trim());
@@ -243,8 +256,8 @@
         googleMap: {
             loaded: false,
             text2position: function (text, isSwap) {
-                var parts = (text ||'').toString().split(';');
-                if (parts.length < 2) parts = text.split(',');
+                var parts = (text || '').toString().split(';');
+                if (parts.length < 2) parts = (text || '').split(',');
                 if (parts.length < 2) return null;
                 var lon = parseFloat(parts[0].replace(',', '.').trim());
                 var lat = parseFloat(parts[1].replace(',', '.').trim());
@@ -306,6 +319,18 @@
                     });
                     if (opacity !== 1) {
                         marker.setOpacity(opacity);
+                    }
+
+                    if (markers[m].url || markers[m].view) {
+                        (function (mm) {
+                            marker.addListener('click', function() {
+                                if (markers[mm].view) {
+                                    vis.changeView(markers[mm].view, markers[mm].view);
+                                } else {
+                                    document.location = markers[mm].url;
+                                }
+                            });
+                        })(m);
                     }
                     result.push(marker);
                 }
@@ -478,7 +503,7 @@
         data-vis-update-style="true"
         data-vis-prev='<img src="widgets/map/img/Prev_tplOsm.png"></img>'
         data-vis-attrs="mCount[1]/number,1,20,1;maxZoom[14]/slider,0,18,1;hideControls/checkbox;"
-        data-vis-attrs0="group.markers/byindex;markersLon-oid(1-mCount)/id,gps;markersLat-oid(1-mCount)/id,gps;markersSwap(1-mCount)/checkbox;markersImage(1-mCount)/image;markersWidth(1-mCount)/slider,1,100,1;markersHeight(1-mCount)/slider,1,100,1;markersOffsetX(1-mCount)/slider,1,100,1;markersOffsetY(1-mCount)/slider,1,100,1;markersOpacity(1-mCount)/slider,0,1,0.05;"
+        data-vis-attrs0="group.markers/byindex;markersLon-oid(1-mCount)/id,gps;markersLat-oid(1-mCount)/id,gps;markersSwap(1-mCount)/checkbox;markersImage(1-mCount)/image;markersWidth(1-mCount)/slider,1,100,1;markersHeight(1-mCount)/slider,1,100,1;markersOffsetX(1-mCount)/slider,1,100,1;markersOffsetY(1-mCount)/slider,1,100,1;markersOpacity(1-mCount)/slider,0,1,0.05;view(1-mCount)/views;url(1-mCount)/text;"
         >
     <div class="vis-widget <%== this.data.attr('class') %>" style="overflow: hidden; width: 200px; height: 200px;" id="<%= this.data.attr('wid') %>">
         <div class="vis-widget-body" id="map_<%= this.data.attr('wid') %>" <%= (el) -> vis.binds.map.osm.init(this.data.wid, this.view, this.data, this.style) %> style="position: relative;"></div>
@@ -494,7 +519,7 @@
         data-vis-update-style="true"
         data-vis-prev='<img src="widgets/map/img/Prev_tplGoogleMap.png"></img>'
         data-vis-attrs="mCount[1]/number,1,20,1;maxZoom[14]/slider,0,30,1;mapTypeId/select,ROADMAP,SATELLITE,HYBRID,TERRAIN;hideControls/checkbox;noZoomAndPan/checkbox;apiKey//onIdChanged;showTraffic/checkbox;"
-        data-vis-attrs0="group.markers/byindex;markersLon-oid(1-mCount)/id,gps;markersLat-oid(1-mCount)/id,gps;markersSwap(1-mCount)/checkbox;markersImage(1-mCount)/image;markersWidth(1-mCount)/slider,1,100,1;markersHeight(1-mCount)/slider,1,100,1;markersOffsetX(1-mCount)/slider,1,100,1;markersOffsetY(1-mCount)/slider,1,100,1;markersText(1-mCount);markersLabel(1-mCount);markersOpacity(1-mCount)/slider,0,1,0.05;"
+        data-vis-attrs0="group.markers/byindex;markersLon-oid(1-mCount)/id,gps;markersLat-oid(1-mCount)/id,gps;markersSwap(1-mCount)/checkbox;markersImage(1-mCount)/image;markersWidth(1-mCount)/slider,1,100,1;markersHeight(1-mCount)/slider,1,100,1;markersOffsetX(1-mCount)/slider,1,100,1;markersOffsetY(1-mCount)/slider,1,100,1;markersText(1-mCount);markersLabel(1-mCount);markersOpacity(1-mCount)/slider,0,1,0.05;view(1-mCount)/views;url(1-mCount)/text;"
 >
     <div class="vis-widget <%== this.data.attr('class') %>" style="overflow: hidden; width: 200px; height: 200px; background-color: none !important" id="<%= this.data.attr('wid') %>">
         <div class="vis-widget-body" <%= (el) -> vis.binds.map.googleMap.init(this.data.wid, this.view, this.data, this.style) %>></div>

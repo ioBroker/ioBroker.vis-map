@@ -1,7 +1,7 @@
 {
     "common": {
         "name": "vis-map",
-        "version": "1.0.1",
+        "version": "1.0.2",
         "title": "vis map Widgets",
         "titleLang": {
             "en": "vis map Widgets",
@@ -15,6 +15,17 @@
             "pl": "vis map Widgets"
         },
         "news": {
+            "1.0.2": {
+                "en": "Event click on pins added",
+                "de": "Event-Klick auf Pins hinzugefügt",
+                "ru": "Событие нажимает на добавленные контакты",
+                "pt": "Evento clique nos pinos adicionados",
+                "nl": "Evenement klik op pinnen toegevoegd",
+                "fr": "Événement cliquez sur les pins ajoutés",
+                "it": "Evento clicca sui pin aggiunti",
+                "es": "El evento hace clic en los pines agregados",
+                "pl": "Dodano kliknięcie zdarzenia na kołkach"
+            },
             "1.0.1": {
                 "en": "Fix error if coordinates are empty",
                 "de": "Fehler beheben, wenn die Koordinaten leer sind",

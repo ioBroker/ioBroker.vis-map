@@ -97,7 +97,7 @@
 
                     if (markers[m].url || markers[m].view) {
                         (function (mm) {
-                            marker.events.register('click', marker.feature, function() {
+                            marker.events.register('mousedown', marker.feature, function() {
                                 if (markers[mm].view) {
                                     vis.changeView(markers[mm].view, markers[mm].view);
                                 } else {

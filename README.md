@@ -1,7 +1,7 @@
 ![Logo](admin/vis-map.png)
 ioBroker.vis-map
 ============
-[![NPM version](http://img.shields.io/npm/v/iobroker.vis-map.svg)](https://www.npmjs.com/package/iobroker.vis-map)
+![Number of Installations](http://iobroker.live/badges/vis-map-installed.svg) ![Number of Installations](http://iobroker.live/badges/vis-map-stable.svg) [![NPM version](http://img.shields.io/npm/v/iobroker.vis-map.svg)](https://www.npmjs.com/package/iobroker.vis-map)
 [![Downloads](https://img.shields.io/npm/dm/iobroker.vis-map.svg)](https://www.npmjs.com/package/iobroker.vis-map)
 
 [![NPM](https://nodei.co/npm/iobroker.vis-map.png?downloads=true)](https://nodei.co/npm/iobroker.vis-map/)

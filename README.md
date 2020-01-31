@@ -1,6 +1,5 @@
 ![Logo](admin/vis-map.png)
-ioBroker.vis-map
-============
+# ioBroker.vis-map
 
 ![Number of Installations](http://iobroker.live/badges/vis-map-installed.svg) ![Number of Installations](http://iobroker.live/badges/vis-map-stable.svg) [![NPM version](http://img.shields.io/npm/v/iobroker.vis-map.svg)](https://www.npmjs.com/package/iobroker.vis-map)
 [![Downloads](https://img.shields.io/npm/dm/iobroker.vis-map.svg)](https://www.npmjs.com/package/iobroker.vis-map)
@@ -59,5 +58,5 @@ You can bind longitude and latitude apart or just place into **longitude** the O
 
 ## License
 
- Copyright (c) 2016-2018 bluefox
+ Copyright (c) 2016-2020 bluefox <dogafox@gmail.com>
  MIT

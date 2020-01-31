@@ -1,7 +1,7 @@
 <!--
     ioBroker.vis map widgets
 
-    version: "1.0.2"
+    version: "1.0.3"
 
     Copyright 2016-2018 bluefox<dogafox@gmail.com>
 
@@ -47,7 +47,7 @@
     }
 
     vis.binds.map = {
-        version: "1.0.0",
+        version: "1.0.3",
         showVersion: function () {
             if (vis.binds.map.version) {
                 console.log('Version vis-map: ' + vis.binds.map.version);
@@ -138,7 +138,7 @@
             showMap: function (divName, markerList, maxZoom) {
                 var map = new OpenLayers.Map(divName);
                 var mapnik = new OpenLayers.Layer.OSM();
-                //Fix Cross Origin problem on safari
+                // Fix Cross Origin problem on safari
                 mapnik.tileOptions.crossOriginKeyword = null;
                 map.addLayer(mapnik);
 

@@ -1,7 +1,7 @@
 {
   "name": "iobroker.vis-map",
   "description": "Map Widgets for ioBroker.vis",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "author": {
     "name": "bluefox",
     "email": "dogafox@gmail.com"
@@ -21,7 +21,7 @@
   ],
   "devDependencies": {
     "gulp": "^4.0.2",
-    "mocha": "^7.0.1",
+    "mocha": "^7.1.0",
     "chai": "^4.2.0"
   },
   "bugs": {
@@ -31,8 +31,5 @@
   "scripts": {
     "test": "node node_modules/mocha/bin/mocha --exit"
   },
-  "license": "MIT",
-  "dependencies": {
-    "@iobroker/adapter-core": "^1.0.3"
-  }
+  "license": "MIT"
 }

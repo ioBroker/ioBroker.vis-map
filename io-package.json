@@ -1,7 +1,7 @@
 {
     "common": {
         "name": "vis-map",
-        "version": "1.0.3",
+        "version": "1.0.4",
         "title": "vis map Widgets",
         "titleLang": {
             "en": "vis map Widgets",
@@ -15,18 +15,30 @@
             "pl": "vis map Widgets"
         },
         "news": {
+            "1.0.4": {
+                "en": "Small errors were fixed.",
+                "de": "Kleine Fehler wurden behoben.",
+                "ru": "Небольшие ошибки были исправлены.",
+                "pt": "Pequenos erros foram corrigidos.",
+                "nl": "Kleine fouten zijn opgelost.",
+                "fr": "De petites erreurs ont été corrigées.",
+                "it": "Sono stati corretti piccoli errori.",
+                "es": "Se corrigieron pequeños errores.",
+                "pl": "Małe błędy zostały naprawione.",
+                "zh-cn": "小错误是固定的。"
+            },
             "1.0.3": {
-                  "en": "Fix OSM issue with Safari",
-                  "de": "Behebung des OSM-Problems mit Safari",
-                  "ru": "Исправить проблему OSM с Safari",
-                  "pt": "Corrigir problema de OSM com o Safari",
-                  "nl": "OSM-probleem met Safari oplossen",
-                  "fr": "Correction d'un problème OSM avec Safari",
-                  "it": "Risolvi il problema OSM con Safari",
-                  "es": "Solucione el problema de OSM con Safari",
-                  "pl": "Napraw problem OSM z Safari",
-                  "zh-cn": "修复Safari的OSM问题"
-                },
+                "en": "Fix OSM issue with Safari",
+                "de": "Behebung des OSM-Problems mit Safari",
+                "ru": "Исправить проблему OSM с Safari",
+                "pt": "Corrigir problema de OSM com o Safari",
+                "nl": "OSM-probleem met Safari oplossen",
+                "fr": "Correction d'un problème OSM avec Safari",
+                "it": "Risolvi il problema OSM con Safari",
+                "es": "Solucione el problema de OSM con Safari",
+                "pl": "Napraw problem OSM z Safari",
+                "zh-cn": "修复Safari的OSM问题"
+            },
             "1.0.2": {
                 "en": "Event click on pins added",
                 "de": "Event-Klick auf Pins hinzugefügt",

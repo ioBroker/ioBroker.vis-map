@@ -27,7 +27,7 @@ You can bind longitude and latitude apart or just place into **longitude** the O
     ### **WORK IN PROGRESS**
 -->
 ## Changelog
-### **WORK IN PROGRESS**
+### 1.0.5 (2024-01-14)
 - (bluefox) Added vis-2 to the restart by installation
 
 ### 1.0.4 (2020-03-18)
@@ -35,7 +35,7 @@ You can bind longitude and latitude apart or just place into **longitude** the O
 
 ### 1.0.3 (2020-01-25)
 - (TA2k) Fix OSM issue with Safari
-  
+
 ### 1.0.2 (2018-07-06)
 - (bluefox) Event click on pins added
 

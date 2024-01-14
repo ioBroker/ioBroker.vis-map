@@ -1,139 +1,137 @@
 {
-    "common": {
-        "name": "vis-map",
-        "version": "1.0.4",
-        "title": "vis map Widgets",
-        "titleLang": {
-            "en": "vis map Widgets",
-            "de": "vis-Kartenwidgets",
-            "ru": "vis виджеты карт",
-            "pt": "vis map Widgets",
-            "nl": "vis map Widgets",
-            "fr": "vis carte Widgets",
-            "it": "vis mappa Widget",
-            "es": "vis map Widgets",
-            "pl": "vis map Widgets"
-        },
-        "news": {
-            "1.0.4": {
-                "en": "Small errors were fixed.",
-                "de": "Kleine Fehler wurden behoben.",
-                "ru": "Небольшие ошибки были исправлены.",
-                "pt": "Pequenos erros foram corrigidos.",
-                "nl": "Kleine fouten zijn opgelost.",
-                "fr": "De petites erreurs ont été corrigées.",
-                "it": "Sono stati corretti piccoli errori.",
-                "es": "Se corrigieron pequeños errores.",
-                "pl": "Małe błędy zostały naprawione.",
-                "zh-cn": "小错误是固定的。"
-            },
-            "1.0.3": {
-                "en": "Fix OSM issue with Safari",
-                "de": "Behebung des OSM-Problems mit Safari",
-                "ru": "Исправить проблему OSM с Safari",
-                "pt": "Corrigir problema de OSM com o Safari",
-                "nl": "OSM-probleem met Safari oplossen",
-                "fr": "Correction d'un problème OSM avec Safari",
-                "it": "Risolvi il problema OSM con Safari",
-                "es": "Solucione el problema de OSM con Safari",
-                "pl": "Napraw problem OSM z Safari",
-                "zh-cn": "修复Safari的OSM问题"
-            },
-            "1.0.2": {
-                "en": "Event click on pins added",
-                "de": "Event-Klick auf Pins hinzugefügt",
-                "ru": "Событие нажимает на добавленные контакты",
-                "pt": "Evento clique nos pinos adicionados",
-                "nl": "Evenement klik op pinnen toegevoegd",
-                "fr": "Événement cliquez sur les pins ajoutés",
-                "it": "Evento clicca sui pin aggiunti",
-                "es": "El evento hace clic en los pines agregados",
-                "pl": "Dodano kliknięcie zdarzenia na kołkach"
-            },
-            "1.0.1": {
-                "en": "Fix error if coordinates are empty",
-                "de": "Fehler beheben, wenn die Koordinaten leer sind",
-                "ru": "Исправить ошибку, если координаты пусты",
-                "pt": "Corrija o erro se as coordenadas estiverem vazias",
-                "nl": "Fout herstellen als coördinaten leeg zijn",
-                "fr": "Correction d'une erreur si les coordonnées sont vides",
-                "it": "Correggi l'errore se le coordinate sono vuote",
-                "es": "Corrige el error si las coordenadas están vacías",
-                "pl": "Napraw błąd, jeśli współrzędne są puste"
-            },
-            "1.0.0": {
-                "en": "allow to swap longitude and latitude",
-                "de": "Tauschen von Breitengrad mit Längengrad möglich",
-                "ru": "Можно поменять широту и долготу местами"
-            },
-            "0.1.4": {
-                "en": "add traffic layer for google maps",
-                "de": "Zeige Verkehrsinformation für Google maps",
-                "ru": "Показать загруженность дорог на Google maps"
-            },
-            "0.1.3": {
-                "en": "fix google map max zoom",
-                "de": "Korrigiere maxZoom bei google map",
-                "ru": "Исправлен зум для google карты"
-            },
-            "0.1.1": {
-                "en": "remove unused files",
-                "de": "remove unused files",
-                "ru": "remove unused files"
-            },
-            "0.1.0": {
-                "en": "initial commit",
-                "de": "initial commit",
-                "ru": "initial commit"
-            }
-        },
-        "desc": {
-            "en": "Map Widgets for ioBroker.vis",
-            "de": "Map Widgets für ioBroker.vis",
-            "ru": "Виджеты карт для ioBroker.vis",
-            "pt": "Map Widgets para ioBroker.vis",
-            "nl": "Kaartwidgets voor ioBroker.vis",
-            "fr": "Widgets cartographiques pour ioBroker.vis",
-            "it": "Widget mappa per ioBroker.vis",
-            "es": "Widgets del mapa para ioBroker.vis",
-            "pl": "Widgety map dla ioBroker.vis"
-        },
-        "platform": "Javascript/Node.js",
-        "icon": "vis-map.png",
-        "enabled": true,
-        "mode": "once",
-        "extIcon": "https://raw.githubusercontent.com/ioBroker/ioBroker.vis-map/master/admin/vis-map.png",
-        "keywords": [
-            "map",
-            "vis",
-            "GUI",
-            "graphical",
-            "scada"
-        ],
-        "materialize": true,
-        "adminUI": {
-            "config": "json"
-        },
-        "readme": "https://github.com/ioBroker/ioBroker.vis-map/blob/master/README.md",
-        "authors": [
-            "Pmant <patrickmo@gmx.de>"
-        ],
-        "localLink": "%web_protocol%://%ip%:%web_port%/vis/edit.html",
-        "license": "MIT",
-        "dependencies": [
-            "vis"
-        ],
-        "onlyWWW": true,
-        "singleton": true,
-        "type": "visualization-widgets",
-        "restartAdapters": [
-            "vis",
-            "vis-2"
-        ],
-        "tier": 3
+  "common": {
+    "name": "vis-map",
+    "version": "1.0.5",
+    "title": "vis map Widgets",
+    "titleLang": {
+      "en": "vis map Widgets",
+      "de": "vis-Kartenwidgets",
+      "ru": "vis виджеты карт",
+      "pt": "vis map Widgets",
+      "nl": "vis map Widgets",
+      "fr": "vis carte Widgets",
+      "it": "vis mappa Widget",
+      "es": "vis map Widgets",
+      "pl": "vis map Widgets"
     },
-    "native": {
-        "googleApiKey": ""
+    "news": {
+      "1.0.5": {
+        "en": "Added vis-2 to the restart by installation",
+        "de": "Vis-2 zum Neustart durch Installation hinzugefügt",
+        "ru": "Добавлен vis-2 к перезапуску с помощью установки",
+        "pt": "Adicionado vis-2 para o reinício por instalação",
+        "nl": "Vis-2 toegevoegd aan de herstart door installatie",
+        "fr": "Ajouté vis-2 au redémarrage par installation",
+        "it": "Aggiunto vis-2 al riavvio da installazione",
+        "es": "Añadido frente-2 al reinicio por instalación",
+        "pl": "Dodano vis-2 do ponownego uruchomienia przez instalację",
+        "uk": "Додано вісь-2 до перезавантаження шляхом установки",
+        "zh-cn": "通过安装添加到重新启动的相对-2"
+      },
+      "1.0.4": {
+        "en": "Small errors were fixed.",
+        "de": "Kleine Fehler wurden behoben.",
+        "ru": "Небольшие ошибки были исправлены.",
+        "pt": "Pequenos erros foram corrigidos.",
+        "nl": "Kleine fouten zijn opgelost.",
+        "fr": "De petites erreurs ont été corrigées.",
+        "it": "Sono stati corretti piccoli errori.",
+        "es": "Se corrigieron pequeños errores.",
+        "pl": "Małe błędy zostały naprawione.",
+        "zh-cn": "小错误是固定的。"
+      },
+      "1.0.3": {
+        "en": "Fix OSM issue with Safari",
+        "de": "Behebung des OSM-Problems mit Safari",
+        "ru": "Исправить проблему OSM с Safari",
+        "pt": "Corrigir problema de OSM com o Safari",
+        "nl": "OSM-probleem met Safari oplossen",
+        "fr": "Correction d'un problème OSM avec Safari",
+        "it": "Risolvi il problema OSM con Safari",
+        "es": "Solucione el problema de OSM con Safari",
+        "pl": "Napraw problem OSM z Safari",
+        "zh-cn": "修复Safari的OSM问题"
+      },
+      "1.0.2": {
+        "en": "Event click on pins added",
+        "de": "Event-Klick auf Pins hinzugefügt",
+        "ru": "Событие нажимает на добавленные контакты",
+        "pt": "Evento clique nos pinos adicionados",
+        "nl": "Evenement klik op pinnen toegevoegd",
+        "fr": "Événement cliquez sur les pins ajoutés",
+        "it": "Evento clicca sui pin aggiunti",
+        "es": "El evento hace clic en los pines agregados",
+        "pl": "Dodano kliknięcie zdarzenia na kołkach"
+      },
+      "1.0.1": {
+        "en": "Fix error if coordinates are empty",
+        "de": "Fehler beheben, wenn die Koordinaten leer sind",
+        "ru": "Исправить ошибку, если координаты пусты",
+        "pt": "Corrija o erro se as coordenadas estiverem vazias",
+        "nl": "Fout herstellen als coördinaten leeg zijn",
+        "fr": "Correction d'une erreur si les coordonnées sont vides",
+        "it": "Correggi l'errore se le coordinate sono vuote",
+        "es": "Corrige el error si las coordenadas están vacías",
+        "pl": "Napraw błąd, jeśli współrzędne są puste"
+      },
+      "1.0.0": {
+        "en": "allow to swap longitude and latitude",
+        "de": "Tauschen von Breitengrad mit Längengrad möglich",
+        "ru": "Можно поменять широту и долготу местами"
+      },
+      "0.1.4": {
+        "en": "add traffic layer for google maps",
+        "de": "Zeige Verkehrsinformation für Google maps",
+        "ru": "Показать загруженность дорог на Google maps"
+      }
     },
-    "instanceObjects": []
+    "desc": {
+      "en": "Map Widgets for ioBroker.vis",
+      "de": "Map Widgets für ioBroker.vis",
+      "ru": "Виджеты карт для ioBroker.vis",
+      "pt": "Map Widgets para ioBroker.vis",
+      "nl": "Kaartwidgets voor ioBroker.vis",
+      "fr": "Widgets cartographiques pour ioBroker.vis",
+      "it": "Widget mappa per ioBroker.vis",
+      "es": "Widgets del mapa para ioBroker.vis",
+      "pl": "Widgety map dla ioBroker.vis"
+    },
+    "platform": "Javascript/Node.js",
+    "icon": "vis-map.png",
+    "enabled": true,
+    "mode": "once",
+    "extIcon": "https://raw.githubusercontent.com/ioBroker/ioBroker.vis-map/master/admin/vis-map.png",
+    "keywords": [
+      "map",
+      "vis",
+      "GUI",
+      "graphical",
+      "scada"
+    ],
+    "materialize": true,
+    "adminUI": {
+      "config": "json"
+    },
+    "readme": "https://github.com/ioBroker/ioBroker.vis-map/blob/master/README.md",
+    "authors": [
+      "Pmant <patrickmo@gmx.de>"
+    ],
+    "localLink": "%web_protocol%://%ip%:%web_port%/vis/edit.html",
+    "license": "MIT",
+    "dependencies": [
+      "vis"
+    ],
+    "onlyWWW": true,
+    "singleton": true,
+    "type": "visualization-widgets",
+    "restartAdapters": [
+      "vis",
+      "vis-2"
+    ],
+    "tier": 3
+  },
+  "native": {
+    "googleApiKey": ""
+  },
+  "instanceObjects": []
 }

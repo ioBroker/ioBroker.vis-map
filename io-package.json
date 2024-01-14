@@ -111,6 +111,9 @@
             "scada"
         ],
         "materialize": true,
+        "adminUI": {
+            "config": "json"
+        },
         "readme": "https://github.com/ioBroker/ioBroker.vis-map/blob/master/README.md",
         "authors": [
             "Pmant <patrickmo@gmx.de>"
@@ -124,8 +127,10 @@
         "singleton": true,
         "type": "visualization-widgets",
         "restartAdapters": [
-            "vis"
-        ]
+            "vis",
+            "vis-2"
+        ],
+        "tier": 3
     },
     "native": {
         "googleApiKey": ""

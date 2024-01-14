@@ -1,0 +1,12 @@
+{
+  "type": "panel",
+  "i18n": true,
+  "items": {
+    "googleApiKey": {
+      "type": "text",
+      "label": "Google Map API key",
+      "sm": 12,
+      "md": 6
+    }
+  }
+}

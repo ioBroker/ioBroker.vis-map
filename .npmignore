@@ -1,8 +1,0 @@
-Gruntfile.js
-tasks
-node_modules
-test
-.idea
-.travis.yml
-appveyor.yml
-admin/i18n

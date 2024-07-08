@@ -1,0 +1,26 @@
+{
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "type": "chrome",
+            "request": "launch",
+            "name": "Launch edit",
+            "url": "http://127.0.0.1:8082/vis/edit.html#test",
+            "trace": true,
+            "skipFiles": [
+                "socket.io.js",
+              ]            
+        },
+        {
+            "type": "chrome",
+            "request": "launch",
+            "name": "Launch runtime",
+            "url": "http://127.0.0.1:8082/vis/index.html#test",
+            "trace": true,
+            "skipFiles": [
+                "socket.io.js",
+              ]            
+        },
+    ]
+}
+//node --inspect-brk=localhost:9229 .\node_modules\iobroker.rssfeed\main.js

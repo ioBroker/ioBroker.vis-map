@@ -59,8 +59,9 @@
         isLonLatIsOID: function (value) {
             if (typeof value !== 'string') return false;
             if (!value) return false;
-            if (value[0] === '-') return false;
-            if (value[0] >= '0' && value[0] <= '9') return false;
+            if (!isNaN(value)) return false;
+            // if (value[0] === '-') return false;
+            // if (value[0] >= '0' && value[0] <= '9') return false;
             return true;
         },
         osm: {

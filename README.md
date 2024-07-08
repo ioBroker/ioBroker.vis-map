@@ -27,6 +27,10 @@ You can bind longitude and latitude apart or just place into **longitude** the O
     ### **WORK IN PROGRESS**
 -->
 ## Changelog
+### **WORK IN PROGRESS**
+- fix datapoint handling for lat/lan
+- Make datapoints in 0_userdata work again
+
 ### 1.1.0 (2024-03-07)
 - (bluefox) Removed dependency to `iobroker.vis`. Only show the message if vis is not installed
 

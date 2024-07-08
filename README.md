@@ -10,7 +10,7 @@
 
 Widgets, that can show coordinates on a map.
 Actually supported only Open Street Maps and Google. To use Google Maps you should get the API Key for Google Maps.
-You can get it [here](https://console.developers.google.com/flows/enableapi?apiid=maps_backend,geocoding_backend,directions_backend,distance_matrix_backend,elevation_backend&keyType=CLIENT_SIDE&reusekey=true)
+You can get it [here](https://developers.google.com/maps/documentation/javascript/get-api-key)
 
 ## Usage
 

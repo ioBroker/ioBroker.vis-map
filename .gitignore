@@ -3,3 +3,7 @@
 admin/i18n/flat.txt
 admin/i18n/*/flat.txt
 package-lock.json
+
+# ioBroker dev-server
+.dev-server/
+.vscode/api.txt

@@ -1,7 +1,7 @@
 {
   "common": {
     "name": "vis-map",
-    "version": "1.1.0",
+    "version": "1.1.1",
     "title": "vis map Widgets",
     "titleLang": {
       "en": "vis map Widgets",
@@ -15,6 +15,19 @@
       "pl": "vis map Widgets"
     },
     "news": {
+      "1.1.1": {
+        "en": "Allowed using OIDs from `0_userdata.0`",
+        "de": "Erlaubt mit OIDs von `0_userdata.0`",
+        "ru": "Разрешено использование ОИД из `0_userdata.0`",
+        "pt": "Permitido usando OIDs de `0_userdata.0`",
+        "nl": "Toegestaan met behulp van OID's van ",
+        "fr": "Autorisé à utiliser les OID de `0_userdata.0`",
+        "it": "Consentito utilizzando OID da `0_userdata.0`",
+        "es": "Permitido utilizar OIDs de `0_userdata.0`",
+        "pl": "Dozwolone przy użyciu OID z '0 _ userdata.0'",
+        "uk": "Допускається використання OIDs від `0_userdata.0`",
+        "zh-cn": "允许使用“ 0_ userdata. 0” 的OID"
+      },
       "1.1.0": {
         "en": "Removed dependency to `iobroker.vis`. Only show the message if vis is not installed",
         "de": "Entzogene Abhängigkeit von `iobroker.vis`. Zeigen Sie nur die Nachricht, wenn vis nicht installiert ist",
@@ -86,11 +99,6 @@
         "it": "Correggi l'errore se le coordinate sono vuote",
         "es": "Corrige el error si las coordenadas están vacías",
         "pl": "Napraw błąd, jeśli współrzędne są puste"
-      },
-      "1.0.0": {
-        "en": "allow to swap longitude and latitude",
-        "de": "Tauschen von Breitengrad mit Längengrad möglich",
-        "ru": "Можно поменять широту и долготу местами"
       }
     },
     "desc": {

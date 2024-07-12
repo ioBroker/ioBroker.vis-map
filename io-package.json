@@ -1,7 +1,7 @@
 {
   "common": {
     "name": "vis-map",
-    "version": "1.1.1",
+    "version": "1.1.2",
     "title": "vis map Widgets",
     "titleLang": {
       "en": "vis map Widgets",
@@ -15,6 +15,19 @@
       "pl": "vis map Widgets"
     },
     "news": {
+      "1.1.2": {
+        "en": "fix datapoint handling for lat/lan\nMake data points in 0_userdata work again",
+        "de": "fix datapoint handling für lat/lan\nDatenpunkte in 0_userdata erneut bearbeiten",
+        "ru": "фиксация обработки данных для лат/лан\nСделать точки данных в работе 0_userdata снова",
+        "pt": "corrigir o manuseio de datapoint para lat/lan\nFaça pontos de dados em 0_userdata trabalhar novamente",
+        "nl": "fix datapoint handling voor lat/lan\nDatapunten in 0_userdata opnieuw laten werken",
+        "fr": "correction du traitement des points de données pour lat/lan\nRefaire fonctionner les points de données dans 0_userdata",
+        "it": "correzione della gestione dei datapoint per lat/lan\nRendi nuovamente i punti di dati in 0_userdata",
+        "es": "arreglar el tratamiento de puntos de datos para lat/lan\nHacer puntos de datos en 0_userdata volver a trabajar",
+        "pl": "ustaw obsługę punktu danych dla latu / lana\nDodać punkty danych w 0 _ userdata ponownie działa",
+        "uk": "фіксувати обробку даних для lat/lan\nЗробіть дані в роботі 0_userdata",
+        "zh-cn": "lat/lan 的固定数据点处理\n让 0_userdata 的数据点再次工作"
+      },
       "1.1.1": {
         "en": "fix datapoint handling for lat/lan\nMake datapoints in 0_userdata work again",
         "de": "fix datapoint handling für lat/lan\nDatenpunkte in 0_userdata erneut arbeiten",
@@ -88,17 +101,6 @@
         "it": "Evento clicca sui pin aggiunti",
         "es": "El evento hace clic en los pines agregados",
         "pl": "Dodano kliknięcie zdarzenia na kołkach"
-      },
-      "1.0.1": {
-        "en": "Fix error if coordinates are empty",
-        "de": "Fehler beheben, wenn die Koordinaten leer sind",
-        "ru": "Исправить ошибку, если координаты пусты",
-        "pt": "Corrija o erro se as coordenadas estiverem vazias",
-        "nl": "Fout herstellen als coördinaten leeg zijn",
-        "fr": "Correction d'une erreur si les coordonnées sont vides",
-        "it": "Correggi l'errore se le coordinate sono vuote",
-        "es": "Corrige el error si las coordenadas están vacías",
-        "pl": "Napraw błąd, jeśli współrzędne są puste"
       }
     },
     "desc": {

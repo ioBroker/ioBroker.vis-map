@@ -45,5 +45,8 @@
     "release-minor": "release-script minor --yes",
     "release-major": "release-script major --yes"
   },
-  "license": "MIT"
+  "license": "MIT",
+  "dependencies": {
+    "@iobroker/dev-server": "^0.7.3"
+  }
 }

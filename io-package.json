@@ -16,17 +16,17 @@
     },
     "news": {
       "1.1.1": {
-        "en": "Allowed using OIDs from `0_userdata.0`",
-        "de": "Erlaubt mit OIDs von `0_userdata.0`",
-        "ru": "Разрешено использование ОИД из `0_userdata.0`",
-        "pt": "Permitido usando OIDs de `0_userdata.0`",
-        "nl": "Toegestaan met behulp van OID's van ",
-        "fr": "Autorisé à utiliser les OID de `0_userdata.0`",
-        "it": "Consentito utilizzando OID da `0_userdata.0`",
-        "es": "Permitido utilizar OIDs de `0_userdata.0`",
-        "pl": "Dozwolone przy użyciu OID z '0 _ userdata.0'",
-        "uk": "Допускається використання OIDs від `0_userdata.0`",
-        "zh-cn": "允许使用“ 0_ userdata. 0” 的OID"
+        "en": "fix datapoint handling for lat/lan\nMake datapoints in 0_userdata work again",
+        "de": "fix datapoint handling für lat/lan\nDatenpunkte in 0_userdata erneut arbeiten",
+        "ru": "фиксация обработки данных для лат/лан\n0_userdata снова",
+        "pt": "corrigir o manuseio de datapoint para lat/lan\nFaça datapoints em 0_userdata trabalhar novamente",
+        "nl": "fix datapoint handling voor lat/lan\nDatapunten in 0_userdata opnieuw laten werken",
+        "fr": "correction du traitement des points de données pour lat/lan\nRefaire fonctionner les points de données dans 0_userdata",
+        "it": "correzione della gestione dei datapoint per lat/lan\nRendi nuovamente i datapoint in 0_userdata",
+        "es": "arreglar el tratamiento de puntos de datos para lat/lan\nHacer puntos de datos en 0_userdata trabajar de nuevo",
+        "pl": "ustaw obsługę punktu danych dla latu / lana\nDodać punkty danych w 0 _ userdata pracy ponownie",
+        "uk": "фіксувати обробку даних для lat/lan\nЗробіть дані в роботі 0_userdata",
+        "zh-cn": "lat/lan 的固定数据点处理\n使 0_userdata 中的数据点再次工作"
       },
       "1.1.0": {
         "en": "Removed dependency to `iobroker.vis`. Only show the message if vis is not installed",

@@ -83,10 +83,13 @@
                     var icon   = new OpenLayers.Icon(url, size, offset);
                     var marker;
                     if (vis.binds.map.isLonLatIsOID(markers[m].lon) && vis.binds.map.isLonLatIsOID(markers[m].lat)) {
+                        //lon=datapoint lat=datapoint
                         marker = new OpenLayers.Marker(vis.binds.map.osm.text2position(vis.states[markers[m].lon + '.val'] + ';' + vis.states[markers[m].lat + '.val'], markers[m].swap), icon);
                     } else if (vis.binds.map.isLonLatIsOID(markers[m].lon)) {
-                        marker = new OpenLayers.Marker(vis.binds.map.osm.text2position(vis.states[markers[m].lon + '.val'], markers[m].swap), icon);
+                        //lon=datapoint lat=value
+                        marker = new OpenLayers.Marker(vis.binds.map.osm.text2position(vis.states[markers[m].lon + '.val'] + ';' + markers[m].lat, markers[m].swap), icon);
                     } else {
+                        //lon=value lat=value
                         marker = new OpenLayers.Marker(vis.binds.map.osm.text2position(markers[m].lon.toString() + (markers[m].lat ? ';' + markers[m].lat : ''), markers[m].swap), icon);
                     }
                     opacity = parseFloat(opacity);
@@ -124,10 +127,10 @@
             },
             text2position: function (text, isSwap) {
                 var parts = (text ||'').toString().split(';');
-                if (parts.length < 2) parts = (text ||'').split(',');
-                if (parts.length < 2) return null;
-                var lon = parseFloat(parts[0].replace(',', '.').trim());
-                var lat = parseFloat(parts[1].replace(',', '.').trim());
+                //if (parts.length < 2) parts = (text ||'').split(',');
+                // if (parts.length < 2) return parseFloat(parts[0].replace(',', '.').trim());
+                var lon = parseFloat(parts[0].replace(',', '.').trim()||0);
+                var lat = parseFloat(((parts[1]||"").replace(',', '.').trim())||0);
                 if (isSwap) {
                     return new OpenLayers.LonLat(lat, lon).transform(vis.binds.map.osm.fromProjection, vis.binds.map.osm.toProjection);
                 } else {
@@ -262,10 +265,10 @@
             loaded: false,
             text2position: function (text, isSwap) {
                 var parts = (text || '').toString().split(';');
-                if (parts.length < 2) parts = (text || '').split(',');
-                if (parts.length < 2) return null;
-                var lon = parseFloat(parts[0].replace(',', '.').trim());
-                var lat = parseFloat(parts[1].replace(',', '.').trim());
+                // if (parts.length < 2) parts = (text || '').split(',');
+                // if (parts.length < 2) return null;
+                var lon = parseFloat(parts[0].replace(',', '.').trim()||0);
+                var lat = parseFloat(((parts[1]||"").replace(',', '.').trim())||0);
                 if (isSwap) {
                     return new google.maps.LatLng(lon, lat);
                 } else {
@@ -309,10 +312,13 @@
                     var position;
 
                     if (vis.binds.map.isLonLatIsOID(markers[m].lon) && vis.binds.map.isLonLatIsOID(markers[m].lat)) {
+                        //lon=datapoint lat=datapoint
                         position = vis.binds.map.googleMap.text2position(vis.states[markers[m].lon + '.val'] + ';' + vis.states[markers[m].lat + '.val'], markers[m].swap);
                     } else if (vis.binds.map.isLonLatIsOID(markers[m].lon)) {
-                        position = vis.binds.map.googleMap.text2position(vis.states[markers[m].lon + '.val'], markers[m].swap);
+                        //lon=datapoint lat=value
+                        position = vis.binds.map.googleMap.text2position(vis.states[markers[m].lon + '.val'] + ';' + markers[m].lat, markers[m].swap);
                     } else {
+                        //lon=value lat=value
                         position = vis.binds.map.googleMap.text2position(markers[m].lon.toString() + (markers[m].lat ? ';' + markers[m].lat : ''), markers[m].swap);
                     }
                     var marker = new google.maps.Marker({

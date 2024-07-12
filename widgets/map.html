@@ -60,8 +60,7 @@
             if (typeof value !== 'string') return false;
             if (!value) return false;
             if (value[0] === '-') return false;
-            if (value[0] >= '0' && value[0] <= '9') return false;
-            return true;
+            return !window.isFinite(value);
         },
         osm: {
             loaded: false,

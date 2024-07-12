@@ -27,7 +27,7 @@ You can bind longitude and latitude apart or just place into **longitude** the O
     ### **WORK IN PROGRESS**
 -->
 ## Changelog
-### 1.1.1 (2024-07-08)
+### **WORK IN PROGRESS**
 - fix datapoint handling for lat/lan
 - Make datapoints in 0_userdata work again
 

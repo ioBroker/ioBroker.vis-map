@@ -64,6 +64,8 @@ You can bind longitude and latitude apart or just place into **longitude** the O
 ### 0.1.0 (2016-07-08)
 - (bluefox) initial checkin
 
+[Older changelogs can be found there](CHANGELOG_OLD.md)
+
 ## License
  Copyright (c) 2016-2024 bluefox <dogafox@gmail.com>
  MIT

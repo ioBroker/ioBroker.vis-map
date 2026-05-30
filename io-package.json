@@ -126,7 +126,6 @@
       "graphical",
       "scada"
     ],
-    "materialize": true,
     "adminUI": {
       "config": "json"
     },

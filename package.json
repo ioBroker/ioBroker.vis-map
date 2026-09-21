@@ -47,6 +47,6 @@
   },
   "license": "MIT",
   "dependencies": {
-    "@iobroker/dev-server": "^0.7.8"
+    "@iobroker/dev-server": "^0.8.0"
   }
 }

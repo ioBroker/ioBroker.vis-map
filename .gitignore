@@ -7,3 +7,6 @@ package-lock.json
 # ioBroker dev-server
 .dev-server/
 .vscode/api.txt
+
+#ignore .commitinfo created by ioBroker release script
+.commitinfo
